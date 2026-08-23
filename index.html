@@ -40,14 +40,14 @@
             </div>
 
             <!-- Signup/Login Form -->
-            <div class="glass p-8 rounded-3xl shadow-2xl">
+            <div class="glass p-8 rounded-3xl shadow-2xl relative z-50">
                 <h3 id="auth-title" class="text-2xl font-bold mb-6 text-white text-center">Create Account</h3>
                 <div class="space-y-4">
-                    <input type="email" id="auth-email" placeholder="Email Address" class="w-full p-4 rounded-2xl outline-none transition focus:border-blue-500">
-                    <input type="password" id="auth-pass" placeholder="Password" class="w-full p-4 rounded-2xl outline-none transition focus:border-blue-500">
+                    <input type="email" id="auth-email" placeholder="Email Address" class="w-full p-4 rounded-2xl outline-none transition focus:border-blue-500 text-white">
+                    <input type="password" id="auth-pass" placeholder="Password" class="w-full p-4 rounded-2xl outline-none transition focus:border-blue-500 text-white">
                     
-                    <!-- Confirm Password (ID check karein) -->
-                    <input type="password" id="auth-confirm-pass" placeholder="Confirm Password" class="w-full p-4 rounded-2xl outline-none transition focus:border-blue-500">
+                    <!-- Confirm Password Field -->
+                    <input type="password" id="auth-confirm-pass" placeholder="Confirm Password" class="w-full p-4 rounded-2xl outline-none transition focus:border-blue-500 text-white">
                     
                     <button id="email-auth-btn" class="w-full bg-blue-600 hover:bg-blue-700 py-4 rounded-2xl font-bold transition active:scale-95 shadow-lg shadow-blue-900/40 text-white">
                         SIGN UP NOW
@@ -55,7 +55,7 @@
 
                     <p class="text-center text-sm text-slate-400 mt-6">
                         <span id="toggle-text">Already have an account?</span> 
-                        <a href="javascript:void(0)" onclick="toggleAuthMode()" id="toggle-link" class="text-blue-400 font-bold ml-1">Login</a>
+                        <button type="button" onclick="toggleAuthMode()" id="toggle-link" class="text-blue-400 font-bold ml-1 bg-transparent border-none cursor-pointer outline-none">Login</button>
                     </p>
                 </div>
             </div>
@@ -168,34 +168,34 @@
         const provider = new GoogleAuthProvider();
 
         // --- AUTH LOGIC FIXED ---
-        let isLoginMode = false;
+        // --- AUTH LOGIC FIXED & GLOBAL ---
+        window.isLoginMode = false;
 
         window.toggleAuthMode = () => {
-            isLoginMode = !isLoginMode;
+            window.isLoginMode = !window.isLoginMode;
             const title = document.getElementById('auth-title');
             const btn = document.getElementById('email-auth-btn');
             const toggleText = document.getElementById('toggle-text');
             const toggleLink = document.getElementById('toggle-link');
             const confirmPassField = document.getElementById('auth-confirm-pass');
 
-            if (isLoginMode) {
-                // LOGIN MODE
+            if (window.isLoginMode) {
                 title.innerText = "Login to Account";
                 btn.innerText = "LOGIN";
                 toggleText.innerText = "Don't have an account?";
                 toggleLink.innerText = "Sign Up";
-                confirmPassField.style.display = "none"; // Confirm Password Chup jayega
+                confirmPassField.style.display = "none"; 
             } else {
-                // SIGNUP MODE
                 title.innerText = "Create Account";
                 btn.innerText = "SIGN UP NOW";
                 toggleText.innerText = "Already have an account?";
                 toggleLink.innerText = "Login";
-                confirmPassField.style.display = "block"; // Confirm Password wapas aayega
+                confirmPassField.style.display = "block";
             }
         };
 
-        document.getElementById('email-auth-btn').onclick = async () => {
+        // Click Listener for the Main Button
+        document.getElementById('email-auth-btn').addEventListener('click', async () => {
             const email = document.getElementById('auth-email').value.trim();
             const pass = document.getElementById('auth-pass').value;
             const confirmPass = document.getElementById('auth-confirm-pass').value;
@@ -203,7 +203,7 @@
             if (!email || !pass) return alert("Please fill all fields");
 
             try {
-                if (isLoginMode) {
+                if (window.isLoginMode) {
                     // LOGIN
                     await signInWithEmailAndPassword(auth, email, pass);
                 } else {
@@ -221,8 +221,7 @@
             } catch (e) {
                 alert("Auth Error: " + e.message);
             }
-        };
-
+        });
         onAuthStateChanged(auth, user => {
             if(user) {
                 document.getElementById('auth-screen').classList.add('hidden');
