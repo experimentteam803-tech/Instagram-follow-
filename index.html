@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yourgrowt - Grow Your Social Presence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #0e1628; color: white; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
+        .bg-card { background-color: #1c263c; }
+        .bg-dark { background-color: #0e1628; }
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        input, select { background-color: #141d2e !important; border: 1px solid #2d3748 !important; color: white !important; }
+        .bottom-nav { background-color: #1c263c; border-top: 1px solid #2d3748; }
+        .float-btn { background: linear-gradient(135deg, #3b82f6, #2563eb); box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4); }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); }
+        .google-btn { background: white; color: #1f2937; }
+        .active-nav { color: #3b82f6 !important; }
+    </style>
+</head>
+<body>
+
+    <!-- AUTH PAGE -->
+    <div id="auth-screen" class="min-h-screen flex flex-col items-center justify-center p-6 bg-[#0e1628]">
+        <div class="max-w-5xl w-full grid md:grid-cols-2 gap-10 items-center">
+            <!-- Instructions & Profits -->
+            <div class="space-y-6">
+                <div class="flex items-center gap-3">
+                    <span class="bg-blue-500 p-2 rounded-lg"><i class="fas fa-rocket text-white"></i></span>
+                    <h1 class="text-3xl font-bold tracking-tighter">Yourgrowt</h1>
+                </div>
+                <h2 class="text-2xl font-semibold text-blue-400">Cheapest Social Services</h2>
+                <ul class="space-y-4 text-slate-300">
+                    <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>Insta Views:</b> 100k Reel Views for just <b>₹29</b>.</span></li>
+                    <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>Insta Followers:</b> 3000 Real Followers for <b>₹49</b>.</span></li>
+                    <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>Comments:</b> Auto comments at <b>₹25</b> per 100.</span></li>
+                </ul>
+            </div>
+
+            <!-- Signup/Login Form -->
+            <div class="glass p-8 rounded-3xl shadow-2xl">
+                <h3 id="auth-title" class="text-2xl font-bold mb-6">Create Account</h3>
+                <div class="space-y-4">
+                    <input type="email" id="auth-email" placeholder="Email Address" class="w-full p-4 rounded-2xl outline-none transition focus:border-blue-500">
+                    <input type="password" id="auth-pass" placeholder="Password" class="w-full p-4 rounded-2xl outline-none transition focus:border-blue-500">
+                    <input type="password" id="auth-confirm-pass" placeholder="Re-enter Password" class="w-full p-4 rounded-2xl outline-none transition focus:border-blue-500">
+                    <button id="email-auth-btn" class="w-full bg-blue-600 hover:bg-blue-700 py-4 rounded-2xl font-bold transition active:scale-95 shadow-lg shadow-blue-900/40">SIGN UP NOW</button>
+                    <div class="relative flex py-2 items-center"><div class="flex-grow border-t border-slate-700"></div><span class="flex-shrink mx-4 text-slate-500 text-sm">OR</span><div class="flex-grow border-t border-slate-700"></div></div>
+                    <button id="google-login-btn" class="google-btn w-full flex items-center justify-center gap-3 py-4 rounded-2xl font-bold transition active:scale-95 shadow-xl">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" class="w-6" alt="Google"> Continue with Google
+                    </button>
+                    <p class="text-center text-sm text-slate-400 mt-4"><span id="toggle-text">Already have an account?</span><a href="#" onclick="toggleAuthMode()" id="toggle-link" class="text-blue-400 font-bold ml-1">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP SCREEN -->
+    <div id="app-screen" class="hidden pb-24">
+        <header class="p-4 flex justify-between items-center bg-dark sticky top-0 z-50">
+            <h1 class="text-xl font-bold tracking-tight text-blue-500">YOURGROWT</h1>
+            <div onclick="showSection('add-funds')" class="bg-card px-4 py-1.5 rounded-lg border border-slate-700 flex items-center gap-2 cursor-pointer">
+                <span class="text-sm font-semibold text-green-400">₹<span id="user-balance">0.00</span></span>
+                <i class="fas fa-wallet"></i>
+            </div>
+        </header>
+
+        <div class="p-4" id="app-banner">
+            <div class="bg-blue-600 rounded-3xl p-6 shadow-xl relative overflow-hidden">
+                <p class="text-[10px] uppercase font-bold opacity-80 mb-1">Welcome back,</p>
+                <h2 class="text-2xl font-bold mb-4" id="display-name">User</h2>
+                <button onclick="showSection('add-funds')" class="bg-white text-blue-600 px-6 py-2 rounded-full text-xs font-bold shadow-lg">RECHARGE NOW</button>
+            </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="flex overflow-x-auto gap-3 px-4 py-2 hide-scroll" id="app-cats">
+            <button onclick="filterCat('All')" class="flex-shrink-0 bg-white text-blue-600 px-6 py-2 rounded-full font-bold text-xs">All</button>
+            <button onclick="filterCat('🔥 FLASH DEALS')" class="flex-shrink-0 bg-card border border-slate-700 px-5 py-2 rounded-full font-medium text-xs">Flash Deals</button>
+            <button onclick="filterCat('Instagram')" class="flex-shrink-0 bg-card border border-slate-700 px-5 py-2 rounded-full font-medium text-xs">Instagram</button>
+            <button onclick="filterCat('YouTube')" class="flex-shrink-0 bg-card border border-slate-700 px-5 py-2 rounded-full font-medium text-xs">YouTube</button>
+            <button onclick="filterCat('Facebook')" class="flex-shrink-0 bg-card border border-slate-700 px-5 py-2 rounded-full font-medium text-xs">Facebook</button>
+        </div>
+
+        <main class="p-4">
+            <section id="new-order" class="section">
+                <div class="bg-card rounded-3xl p-5 border border-slate-800 space-y-5">
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-500 uppercase mb-2 block ml-1">Category</label>
+                        <select id="category-select" class="w-full p-4 rounded-2xl outline-none text-sm" onchange="updateServices()"></select>
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-500 uppercase mb-2 block ml-1">Service</label>
+                        <select id="service-select" class="w-full p-4 rounded-2xl outline-none text-sm" onchange="updateServiceInfo()"></select>
+                    </div>
+                    
+                    <div class="bg-dark/50 rounded-2xl p-4 border border-slate-800 grid grid-cols-3 gap-4 text-center">
+                        <div><p class="text-[9px] text-slate-500 uppercase">Start</p><p class="text-[11px] font-bold" id="s-start">INSTANT</p></div>
+                        <div><p class="text-[9px] text-slate-500 uppercase">Rate (Base)</p><p class="text-[11px] font-bold" id="s-rate">₹0</p></div>
+                        <div><p class="text-[9px] text-slate-500 uppercase">Drop</p><p class="text-[11px] font-bold" id="s-drop">NO</p></div>
+                    </div>
+
+                    <input type="text" placeholder="Paste link here" class="w-full p-4 rounded-2xl outline-none text-sm">
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-500 uppercase mb-2 block ml-1">Quantity</label>
+                            <input type="number" id="order-qty" value="1000" class="w-full p-4 rounded-2xl outline-none text-sm" oninput="calculateCost()">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-500 uppercase mb-2 block ml-1">Charge</label>
+                            <input type="text" id="order-cost" value="₹0.00" class="w-full p-4 rounded-2xl font-bold text-green-400" readonly>
+                        </div>
+                    </div>
+                    <button onclick="alert('Order Successful!')" class="w-full bg-blue-600 py-4 rounded-2xl font-bold text-sm">PLACE ORDER</button>
+                </div>
+            </section>
+
+            <section id="add-funds" class="section hidden">
+                <div class="bg-card rounded-3xl p-6 text-center border border-slate-800">
+                    <div class="bg-white p-3 rounded-2xl inline-block mb-4"><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=arif@upi" class="w-48 h-48"></div>
+                    <p class="text-sm">UPI ID: <b class="select-all">arif@upi</b></p>
+                    <div class="mt-6 space-y-4"><input type="text" id="utr-input" placeholder="Enter Transaction ID (UTR)" class="w-full p-4 rounded-2xl outline-none"><button class="w-full bg-green-500 py-4 rounded-2xl font-bold">VERIFY DEPOSIT</button></div>
+                </div>
+            </section>
+
+            <section id="orders" class="section hidden text-center opacity-30 py-20"><i class="fas fa-box-open text-6xl mb-4"></i><p>No orders found yet</p></section>
+
+            <section id="account" class="section hidden text-center">
+                <img id="profile-pic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="w-24 h-24 rounded-full mx-auto border-4 border-blue-500 mb-4">
+                <p id="profile-name" class="font-bold text-xl"></p>
+                <p id="profile-email" class="text-slate-400 text-sm mb-8"></p>
+                <button onclick="handleLogout()" class="w-full bg-red-500/10 text-red-500 py-4 rounded-2xl font-bold border border-red-500/20">LOGOUT</button>
+            </section>
+        </main>
+
+        <nav class="bottom-nav fixed bottom-0 w-full flex justify-around items-center py-4 z-50">
+            <button onclick="showSection('orders')" class="nav-btn flex flex-col items-center gap-1 text-slate-500"><i class="fas fa-list text-xl"></i><span class="text-[10px]">Orders</span></button>
+            <div class="relative -top-8"><button onclick="showSection('new-order')" class="float-btn w-16 h-16 rounded-full flex items-center justify-center text-white text-3xl"><i class="fas fa-home"></i></button><span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] text-blue-500 font-bold">Home</span></div>
+            <button onclick="showSection('account')" class="nav-btn flex flex-col items-center gap-1 text-slate-500"><i class="fas fa-user-circle text-xl"></i><span class="text-[10px]">Account</span></button>
+        </nav>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+        import { getDatabase, ref, onValue, set, get } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDzmYzLlnxHZQaNkRUc_bz6sMV5toT9nxc",
+            authDomain: "mining-bot-2f220.firebaseapp.com",
+            databaseURL: "https://mining-bot-2f220-default-rtdb.firebaseio.com",
+            projectId: "mining-bot-2f220",
+            storageBucket: "mining-bot-2f220.firebasestorage.app",
+            messagingSenderId: "343763715927",
+            appId: "1:343763715927:web:f1f1840fe029488ddfe012",
+            measurementId: "G-F6KPRL7QSL"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+        const provider = new GoogleAuthProvider();
+
+        let isLoginMode = false;
+
+        window.toggleAuthMode = () => {
+            isLoginMode = !isLoginMode;
+            document.getElementById('auth-title').innerText = isLoginMode ? "Welcome Back" : "Create Account";
+            document.getElementById('email-auth-btn').innerText = isLoginMode ? "LOGIN" : "SIGN UP NOW";
+            document.getElementById('toggle-text').innerText = isLoginMode ? "Don't have an account?" : "Already have an account?";
+            document.getElementById('toggle-link').innerText = isLoginMode ? "Sign Up" : "Login";
+            document.getElementById('auth-confirm-pass').style.display = isLoginMode ? "none" : "block";
+        };
+
+        document.getElementById('email-auth-btn').onclick = async () => {
+            const email = document.getElementById('auth-email').value;
+            const pass = document.getElementById('auth-pass').value;
+            const confirmPass = document.getElementById('auth-confirm-pass').value;
+            if(!email || !pass) return alert("Fill all fields");
+            try {
+                if(isLoginMode) { await signInWithEmailAndPassword(auth, email, pass); } 
+                else {
+                    if(pass !== confirmPass) return alert("Passwords do not match");
+                    const res = await createUserWithEmailAndPassword(auth, email, pass);
+                    await set(ref(db, `users/${res.user.uid}`), { name: email.split('@')[0], email: email, balance: 0.00 });
+                }
+            } catch(e) { alert(e.message); }
+        };
+
+        document.getElementById('google-login-btn').onclick = async () => {
+            try {
+                const res = await signInWithPopup(auth, provider);
+                const userRef = ref(db, `users/${res.user.uid}`);
+                const snap = await get(userRef);
+                if(!snap.exists()) { await set(userRef, { name: res.user.displayName, email: res.user.email, balance: 0.00 }); }
+            } catch(e) { alert(e.message); }
+        };
+
+        window.handleLogout = () => signOut(auth);
+
+        onAuthStateChanged(auth, user => {
+            if(user) {
+                document.getElementById('auth-screen').classList.add('hidden');
+                document.getElementById('app-screen').classList.remove('hidden');
+                document.getElementById('display-name').innerText = user.displayName || user.email.split('@')[0];
+                document.getElementById('profile-name').innerText = user.displayName || user.email.split('@')[0];
+                document.getElementById('profile-email').innerText = user.email;
+                if(user.photoURL) document.getElementById('profile-pic').src = user.photoURL;
+                loadDashboard(user.uid);
+            } else {
+                document.getElementById('auth-screen').classList.remove('hidden');
+                document.getElementById('app-screen').classList.add('hidden');
+            }
+        });
+
+        // --- UPDATED SERVICES DATABASE ---
+        const services = [
+            // INSTAGRAM
+            { id:1, cat:"Instagram", name: "Insta Reel Likes", price: 20, baseQty: 1000, start:"Instant", drop:"No" },
+            { id:2, cat:"Instagram", name: "Automatic Comments", price: 25, baseQty: 100, start:"1-5 Min", drop:"No" },
+            { id:3, cat:"Instagram", name: "Manual Custom Comments", price: 35, baseQty: 100, start:"Manual", drop:"No" },
+            { id:4, cat:"Instagram", name: "Insta Reel Views [Flash]", price: 29, baseQty: 100000, start:"Instant", drop:"No" },
+            { id:5, cat:"Instagram", name: "Real Followers [Safe]", price: 49, baseQty: 3000, start:"1-10 Min", drop:"Non-Drop" },
+            { id:6, cat:"Instagram", name: "ID Reports [Account Ban]", price: 119, baseQty: 1000, start:"Instant", drop:"Elite" },
+            
+            // YOUTUBE
+            { id:7, cat:"YouTube", name: "YouTube Subscribers", price: 450, baseQty: 1000, start:"12H", drop:"Lifetime" },
+            { id:8, cat:"YouTube", name: "YouTube Watch Time (4k Hours)", price: 800, baseQty: 4000, start:"Slow", drop:"Stable" },
+            { id:9, cat:"YouTube", name: "YouTube Views [High Retention]", price: 150, baseQty: 1000, start:"Instant", drop:"No" },
+            { id:10, cat:"YouTube", name: "YouTube Video Likes", price: 80, baseQty: 1000, start:"Instant", drop:"No" },
+
+            // FACEBOOK
+            { id:11, cat:"Facebook", name: "FB Page Followers", price: 199, baseQty: 1000, start:"Instant", drop:"Non-Drop" },
+            { id:12, cat:"Facebook", name: "FB Post Likes", price: 30, baseQty: 1000, start:"Instant", drop:"No" },
+            { id:13, cat:"Facebook", name: "FB Video Views", price: 50, baseQty: 1000, start:"Instant", drop:"No" },
+            
+            // FLASH
+            { id:101, cat:"🔥 FLASH DEALS", name: "SPECIAL: 10k Followers + 10k Likes", price: 149, baseQty: 1, start:"Instant", drop:"Mixed" }
+        ];
+
+        function loadDashboard(uid) {
+            const catSel = document.getElementById('category-select');
+            const cats = [...new Set(services.map(s => s.cat))];
+            catSel.innerHTML = cats.map(c => `<option value="${c}">${c}</option>`).join('');
+            updateServices();
+            onValue(ref(db, `users/${uid}/balance`), snap => {
+                document.getElementById('user-balance').innerText = (snap.val() || 0).toFixed(2);
+            });
+        }
+
+        window.updateServices = () => {
+            const cat = document.getElementById('category-select').value;
+            const sSel = document.getElementById('service-select');
+            const filtered = services.filter(s => s.cat === cat);
+            sSel.innerHTML = filtered.map(s => `<option value="${s.id}">${s.name} - ₹${s.price} (per ${s.baseQty.toLocaleString()})</option>`).join('');
+            updateServiceInfo();
+        };
+
+        window.updateServiceInfo = () => {
+            const sid = document.getElementById('service-select').value;
+            const s = services.find(x => x.id == sid);
+            document.getElementById('s-start').innerText = s.start;
+            document.getElementById('s-rate').innerText = `₹${s.price}/${s.baseQty.toLocaleString()}`;
+            document.getElementById('s-drop').innerText = s.drop;
+            calculateCost();
+        };
+
+        window.calculateCost = () => {
+            const sid = document.getElementById('service-select').value;
+            const qty = document.getElementById('order-qty').value;
+            const s = services.find(x => x.id == sid);
+            if(s) {
+                // Correct logic: Total = (Rate / BaseQty) * SelectedQty
+                const total = (s.price / s.baseQty) * qty;
+                document.getElementById('order-cost').value = "₹" + total.toFixed(2);
+            }
+        };
+
+        window.showSection = (id) => {
+            document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+            const isHome = id === 'new-order';
+            document.getElementById('app-banner').style.display = isHome ? 'block' : 'none';
+            document.getElementById('app-cats').style.display = isHome ? 'flex' : 'none';
+        };
+
+        window.filterCat = (catName) => {
+            if(catName === 'All') document.getElementById('category-select').selectedIndex = 0;
+            else document.getElementById('category-select').value = catName;
+            updateServices();
+        };
+    </script>
+</body>
+</html>
