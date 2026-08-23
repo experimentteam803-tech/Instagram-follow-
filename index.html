@@ -29,29 +29,33 @@
             <div class="space-y-6">
                 <div class="flex items-center gap-3">
                     <span class="bg-blue-500 p-2 rounded-lg"><i class="fas fa-rocket text-white"></i></span>
-                    <h1 class="text-3xl font-bold tracking-tighter">Yourgrowt</h1>
+                    <h1 class="text-3xl font-bold tracking-tighter text-white">Yourgrowt</h1>
                 </div>
-                <h2 class="text-2xl font-semibold text-blue-400">Cheapest Social Services</h2>
+                <h2 class="text-2xl font-semibold text-blue-400">Join the Best SMM Panel</h2>
                 <ul class="space-y-4 text-slate-300">
-                    <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>Insta Views:</b> 100k Reel Views for just <b>₹29</b>.</span></li>
-                    <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>Insta Followers:</b> 3000 Real Followers for <b>₹49</b>.</span></li>
-                    <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>Comments:</b> Auto comments at <b>₹25</b> per 100.</span></li>
+                    <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>Flash Sale:</b> Instagram 10k Followers only <b>₹99</b>.</span></li>
+                    <li class="flex gap-3 items-start"><i class="fas fa-shield-virus text-red-400 mt-1"></i><span><b>Ban Services:</b> 1k Instagram ID Reports for <b>₹119</b>.</span></li>
+                    <li class="flex gap-3 items-start"><i class="fas fa-bolt text-yellow-400 mt-1"></i><span><b>Super Fast:</b> Automated instant order processing.</span></li>
                 </ul>
             </div>
 
             <!-- Signup/Login Form -->
             <div class="glass p-8 rounded-3xl shadow-2xl">
-                <h3 id="auth-title" class="text-2xl font-bold mb-6">Create Account</h3>
+                <h3 id="auth-title" class="text-2xl font-bold mb-6 text-white text-center">Create Account</h3>
                 <div class="space-y-4">
                     <input type="email" id="auth-email" placeholder="Email Address" class="w-full p-4 rounded-2xl outline-none transition focus:border-blue-500">
                     <input type="password" id="auth-pass" placeholder="Password" class="w-full p-4 rounded-2xl outline-none transition focus:border-blue-500">
-                    <input type="password" id="auth-confirm-pass" placeholder="Re-enter Password" class="w-full p-4 rounded-2xl outline-none transition focus:border-blue-500">
-                    <button id="email-auth-btn" class="w-full bg-blue-600 hover:bg-blue-700 py-4 rounded-2xl font-bold transition active:scale-95 shadow-lg shadow-blue-900/40">SIGN UP NOW</button>
-                    <div class="relative flex py-2 items-center"><div class="flex-grow border-t border-slate-700"></div><span class="flex-shrink mx-4 text-slate-500 text-sm">OR</span><div class="flex-grow border-t border-slate-700"></div></div>
-                    <button id="google-login-btn" class="google-btn w-full flex items-center justify-center gap-3 py-4 rounded-2xl font-bold transition active:scale-95 shadow-xl">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" class="w-6" alt="Google"> Continue with Google
+                    <!-- Confirm Password Field -->
+                    <input type="password" id="auth-confirm-pass" placeholder="Confirm Password" class="w-full p-4 rounded-2xl outline-none transition focus:border-blue-500">
+                    
+                    <button id="email-auth-btn" class="w-full bg-blue-600 hover:bg-blue-700 py-4 rounded-2xl font-bold transition active:scale-95 shadow-lg shadow-blue-900/40 text-white">
+                        SIGN UP NOW
                     </button>
-                    <p class="text-center text-sm text-slate-400 mt-4"><span id="toggle-text">Already have an account?</span><a href="#" onclick="toggleAuthMode()" id="toggle-link" class="text-blue-400 font-bold ml-1">Login</a></p>
+
+                    <p class="text-center text-sm text-slate-400 mt-6">
+                        <span id="toggle-text">Already have an account?</span> 
+                        <a href="javascript:void(0)" onclick="toggleAuthMode()" id="toggle-link" class="text-blue-400 font-bold ml-1">Login</a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -164,7 +168,7 @@
         const db = getDatabase(app);
         const provider = new GoogleAuthProvider();
 
-        // --- AUTH LOGIC START ---
+        // --- AUTH LOGIC FIXED ---
         let isLoginMode = false;
 
         window.toggleAuthMode = () => {
@@ -180,13 +184,13 @@
                 btn.innerText = "LOGIN";
                 toggleText.innerText = "Don't have an account?";
                 toggleLink.innerText = "Sign Up";
-                if(confirmPassField) confirmPassField.style.display = "none";
+                confirmPassField.style.display = "none"; // Login mein confirm password hide
             } else {
                 title.innerText = "Create Account";
                 btn.innerText = "SIGN UP NOW";
                 toggleText.innerText = "Already have an account?";
                 toggleLink.innerText = "Login";
-                if(confirmPassField) confirmPassField.style.display = "block";
+                confirmPassField.style.display = "block"; // Signup mein confirm password show
             }
         };
 
@@ -199,10 +203,10 @@
 
             try {
                 if (isLoginMode) {
-                    // LOGIN LOGIC
+                    // --- LOGIN LOGIC ---
                     await signInWithEmailAndPassword(auth, email, pass);
                 } else {
-                    // SIGNUP LOGIC
+                    // --- SIGNUP LOGIC ---
                     if (pass !== confirmPass) return alert("Passwords do not match!");
                     if (pass.length < 6) return alert("Password should be at least 6 characters");
                     
@@ -218,7 +222,6 @@
                 alert("Auth Error: " + e.message);
             }
         };
-        // --- AUTH LOGIC END ---
 
         onAuthStateChanged(auth, user => {
             if(user) {
