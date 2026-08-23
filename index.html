@@ -164,42 +164,61 @@
         const db = getDatabase(app);
         const provider = new GoogleAuthProvider();
 
+        // --- AUTH LOGIC START ---
         let isLoginMode = false;
 
         window.toggleAuthMode = () => {
             isLoginMode = !isLoginMode;
-            document.getElementById('auth-title').innerText = isLoginMode ? "Welcome Back" : "Create Account";
-            document.getElementById('email-auth-btn').innerText = isLoginMode ? "LOGIN" : "SIGN UP NOW";
-            document.getElementById('toggle-text').innerText = isLoginMode ? "Don't have an account?" : "Already have an account?";
-            document.getElementById('toggle-link').innerText = isLoginMode ? "Sign Up" : "Login";
-            document.getElementById('auth-confirm-pass').style.display = isLoginMode ? "none" : "block";
+            const title = document.getElementById('auth-title');
+            const btn = document.getElementById('email-auth-btn');
+            const toggleText = document.getElementById('toggle-text');
+            const toggleLink = document.getElementById('toggle-link');
+            const confirmPassField = document.getElementById('auth-confirm-pass');
+
+            if (isLoginMode) {
+                title.innerText = "Login to Account";
+                btn.innerText = "LOGIN";
+                toggleText.innerText = "Don't have an account?";
+                toggleLink.innerText = "Sign Up";
+                if(confirmPassField) confirmPassField.style.display = "none";
+            } else {
+                title.innerText = "Create Account";
+                btn.innerText = "SIGN UP NOW";
+                toggleText.innerText = "Already have an account?";
+                toggleLink.innerText = "Login";
+                if(confirmPassField) confirmPassField.style.display = "block";
+            }
         };
 
         document.getElementById('email-auth-btn').onclick = async () => {
-            const email = document.getElementById('auth-email').value;
+            const email = document.getElementById('auth-email').value.trim();
             const pass = document.getElementById('auth-pass').value;
             const confirmPass = document.getElementById('auth-confirm-pass').value;
-            if(!email || !pass) return alert("Fill all fields");
+
+            if (!email || !pass) return alert("Please fill all fields");
+
             try {
-                if(isLoginMode) { await signInWithEmailAndPassword(auth, email, pass); } 
-                else {
-                    if(pass !== confirmPass) return alert("Passwords do not match");
+                if (isLoginMode) {
+                    // LOGIN LOGIC
+                    await signInWithEmailAndPassword(auth, email, pass);
+                } else {
+                    // SIGNUP LOGIC
+                    if (pass !== confirmPass) return alert("Passwords do not match!");
+                    if (pass.length < 6) return alert("Password should be at least 6 characters");
+                    
                     const res = await createUserWithEmailAndPassword(auth, email, pass);
-                    await set(ref(db, `users/${res.user.uid}`), { name: email.split('@')[0], email: email, balance: 0.00 });
+                    // Database mein user entry
+                    await set(ref(db, `users/${res.user.uid}`), {
+                        name: email.split('@')[0],
+                        email: email,
+                        balance: 0.00
+                    });
                 }
-            } catch(e) { alert(e.message); }
+            } catch (e) {
+                alert("Auth Error: " + e.message);
+            }
         };
-
-        document.getElementById('google-login-btn').onclick = async () => {
-            try {
-                const res = await signInWithPopup(auth, provider);
-                const userRef = ref(db, `users/${res.user.uid}`);
-                const snap = await get(userRef);
-                if(!snap.exists()) { await set(userRef, { name: res.user.displayName, email: res.user.email, balance: 0.00 }); }
-            } catch(e) { alert(e.message); }
-        };
-
-        window.handleLogout = () => signOut(auth);
+        // --- AUTH LOGIC END ---
 
         onAuthStateChanged(auth, user => {
             if(user) {
