@@ -45,7 +45,8 @@
                 <div class="space-y-4">
                     <input type="email" id="auth-email" placeholder="Email Address" class="w-full p-4 rounded-2xl outline-none transition focus:border-blue-500">
                     <input type="password" id="auth-pass" placeholder="Password" class="w-full p-4 rounded-2xl outline-none transition focus:border-blue-500">
-                    <!-- Confirm Password Field -->
+                    
+                    <!-- Confirm Password (ID check karein) -->
                     <input type="password" id="auth-confirm-pass" placeholder="Confirm Password" class="w-full p-4 rounded-2xl outline-none transition focus:border-blue-500">
                     
                     <button id="email-auth-btn" class="w-full bg-blue-600 hover:bg-blue-700 py-4 rounded-2xl font-bold transition active:scale-95 shadow-lg shadow-blue-900/40 text-white">
@@ -58,8 +59,6 @@
                     </p>
                 </div>
             </div>
-        </div>
-    </div>
 
     <!-- MAIN APP SCREEN -->
     <div id="app-screen" class="hidden pb-24">
@@ -180,17 +179,19 @@
             const confirmPassField = document.getElementById('auth-confirm-pass');
 
             if (isLoginMode) {
+                // LOGIN MODE
                 title.innerText = "Login to Account";
                 btn.innerText = "LOGIN";
                 toggleText.innerText = "Don't have an account?";
                 toggleLink.innerText = "Sign Up";
-                confirmPassField.style.display = "none"; // Login mein confirm password hide
+                confirmPassField.style.display = "none"; // Confirm Password Chup jayega
             } else {
+                // SIGNUP MODE
                 title.innerText = "Create Account";
                 btn.innerText = "SIGN UP NOW";
                 toggleText.innerText = "Already have an account?";
                 toggleLink.innerText = "Login";
-                confirmPassField.style.display = "block"; // Signup mein confirm password show
+                confirmPassField.style.display = "block"; // Confirm Password wapas aayega
             }
         };
 
@@ -203,15 +204,14 @@
 
             try {
                 if (isLoginMode) {
-                    // --- LOGIN LOGIC ---
+                    // LOGIN
                     await signInWithEmailAndPassword(auth, email, pass);
                 } else {
-                    // --- SIGNUP LOGIC ---
+                    // SIGNUP
                     if (pass !== confirmPass) return alert("Passwords do not match!");
                     if (pass.length < 6) return alert("Password should be at least 6 characters");
                     
                     const res = await createUserWithEmailAndPassword(auth, email, pass);
-                    // Database mein user entry
                     await set(ref(db, `users/${res.user.uid}`), {
                         name: email.split('@')[0],
                         email: email,
