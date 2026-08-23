@@ -216,30 +216,38 @@
             }
         });
 
-        // --- UPDATED SERVICES DATABASE ---
-        const services = [
-            // INSTAGRAM
-            { id:1, cat:"Instagram", name: "Insta Reel Likes", price: 20, baseQty: 1000, start:"Instant", drop:"No" },
-            { id:2, cat:"Instagram", name: "Automatic Comments", price: 25, baseQty: 100, start:"1-5 Min", drop:"No" },
-            { id:3, cat:"Instagram", name: "Manual Custom Comments", price: 35, baseQty: 100, start:"Manual", drop:"No" },
-            { id:4, cat:"Instagram", name: "Insta Reel Views [Flash]", price: 29, baseQty: 100000, start:"Instant", drop:"No" },
-            { id:5, cat:"Instagram", name: "Real Followers [Safe]", price: 49, baseQty: 3000, start:"1-10 Min", drop:"Non-Drop" },
-            { id:6, cat:"Instagram", name: "ID Reports [Account Ban]", price: 119, baseQty: 1000, start:"Instant", drop:"Elite" },
-            
-            // YOUTUBE
-            { id:7, cat:"YouTube", name: "YouTube Subscribers", price: 450, baseQty: 1000, start:"12H", drop:"Lifetime" },
-            { id:8, cat:"YouTube", name: "YouTube Watch Time (4k Hours)", price: 800, baseQty: 4000, start:"Slow", drop:"Stable" },
-            { id:9, cat:"YouTube", name: "YouTube Views [High Retention]", price: 150, baseQty: 1000, start:"Instant", drop:"No" },
-            { id:10, cat:"YouTube", name: "YouTube Video Likes", price: 80, baseQty: 1000, start:"Instant", drop:"No" },
+        // Yeh variable ab khali rahega, data Firebase se aayega
+        window.allServices = []; 
 
-            // FACEBOOK
-            { id:11, cat:"Facebook", name: "FB Page Followers", price: 199, baseQty: 1000, start:"Instant", drop:"Non-Drop" },
-            { id:12, cat:"Facebook", name: "FB Post Likes", price: 30, baseQty: 1000, start:"Instant", drop:"No" },
-            { id:13, cat:"Facebook", name: "FB Video Views", price: 50, baseQty: 1000, start:"Instant", drop:"No" },
-            
-            // FLASH
-            { id:101, cat:"🔥 FLASH DEALS", name: "SPECIAL: 10k Followers + 10k Likes", price: 149, baseQty: 1, start:"Instant", drop:"Mixed" }
-        ];
+        function loadDashboard(uid) {
+            // 1. User Balance Listener
+            onValue(ref(db, `users/${uid}/balance`), snap => {
+                document.getElementById('user-balance').innerText = (snap.val() || 0).toFixed(2);
+            });
+
+            // 2. Dynamic Services Listener (Admin Panel se data lega)
+            onValue(ref(db, 'services'), (snap) => {
+                const data = snap.val();
+                if(data) {
+                    window.allServices = Object.values(data);
+                    const catSel = document.getElementById('category-select');
+                    const cats = [...new Set(window.allServices.map(s => s.cat))];
+                    catSel.innerHTML = cats.map(c => `<option value="${c}">${c}</option>`).join('');
+                    updateServices(); 
+                }
+            });
+
+            // 3. Dynamic UPI/QR Listener
+            onValue(ref(db, 'settings/payment'), (snap) => {
+                if(snap.exists()) {
+                    const upi = snap.val().upi;
+                    const upiDisplay = document.getElementById('upi-id');
+                    if(upiDisplay) upiDisplay.innerText = upi;
+                    const qrImg = document.getElementById('qr-img');
+                    if(qrImg) qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=${upi}`;
+                }
+            });
+        }
 
         function loadDashboard(uid) {
             const catSel = document.getElementById('category-select');
@@ -254,28 +262,53 @@
         window.updateServices = () => {
             const cat = document.getElementById('category-select').value;
             const sSel = document.getElementById('service-select');
-            const filtered = services.filter(s => s.cat === cat);
+            const filtered = window.allServices.filter(s => s.cat === cat);
             sSel.innerHTML = filtered.map(s => `<option value="${s.id}">${s.name} - ₹${s.price} (per ${s.baseQty.toLocaleString()})</option>`).join('');
             updateServiceInfo();
         };
 
         window.updateServiceInfo = () => {
             const sid = document.getElementById('service-select').value;
-            const s = services.find(x => x.id == sid);
-            document.getElementById('s-start').innerText = s.start;
-            document.getElementById('s-rate').innerText = `₹${s.price}/${s.baseQty.toLocaleString()}`;
-            document.getElementById('s-drop').innerText = s.drop;
-            calculateCost();
+            const s = window.allServices.find(x => x.id == sid);
+            if(s) {
+                document.getElementById('s-start').innerText = s.start || "INSTANT";
+                document.getElementById('s-rate').innerText = `₹${s.price}/${s.baseQty.toLocaleString()}`;
+                document.getElementById('s-drop').innerText = s.drop || "NO";
+                calculateCost();
+            }
         };
 
         window.calculateCost = () => {
             const sid = document.getElementById('service-select').value;
             const qty = document.getElementById('order-qty').value;
-            const s = services.find(x => x.id == sid);
+            const s = window.allServices.find(x => x.id == sid);
             if(s) {
-                // Correct logic: Total = (Rate / BaseQty) * SelectedQty
                 const total = (s.price / s.baseQty) * qty;
                 document.getElementById('order-cost').value = "₹" + total.toFixed(2);
+            }
+        };
+        window.submitDeposit = async () => {
+            const amt = parseFloat(document.getElementById('pay-amt')?.value || 0);
+            const utr = document.getElementById('utr-input')?.value; // Apni ID check karein
+            const user = auth.currentUser;
+
+            if(!amt || !utr) return alert("Please enter Amount and UTR number");
+            if(utr.length < 10) return alert("Invalid UTR Number");
+
+            try {
+                const depRef = push(ref(db, 'deposits'));
+                await set(depRef, {
+                    uid: user.uid,
+                    userEmail: user.email,
+                    amount: amt,
+                    utr: utr,
+                    status: 'Pending',
+                    timestamp: Date.now()
+                });
+                alert("Deposit request submitted! Admin will verify soon.");
+                document.getElementById('utr-input').value = "";
+            } catch(e) {
+                alert("Error: " + e.message);
             }
         };
 
