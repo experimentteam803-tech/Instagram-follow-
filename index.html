@@ -98,7 +98,7 @@
                         <input type="number" id="order-qty" value="1000" class="w-full p-4 rounded-2xl outline-none text-sm" oninput="calculateCost()">
                         <input type="text" id="order-cost" value="₹0.00" class="w-full p-4 rounded-2xl font-bold text-green-400" readonly>
                     </div>
-                    <button onclick="alert('Order Placed!')" class="w-full bg-blue-600 py-4 rounded-2xl font-bold text-sm shadow-lg text-white">PLACE ORDER</button>
+                    <button onclick="placeOrder()" class="w-full bg-blue-600 py-4 rounded-2xl font-bold text-sm shadow-lg text-white">PLACE ORDER</button>
                 </div>
             </section>
 
@@ -162,7 +162,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-        import { getDatabase, ref, onValue, set, get, push } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+        import { getDatabase, ref, onValue, set, get, update, push } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDzmYzLlnxHZQaNkRUc_bz6sMV5toT9nxc",
@@ -181,9 +181,9 @@
 
         window.isLoginMode = false;
         window.adminUpi = "arifxz@axl";
+        window.userBalance = 0;
         let paymentTimerInterval;
 
-        // --- ALL SERVICES DATA ---
         const defaultServices = [
             { id:1, cat:"Instagram", name: "Insta Reel Likes", price: 20, baseQty: 1000, start:"Instant", drop:"No" },
             { id:2, cat:"Instagram", name: "Automatic Comments", price: 25, baseQty: 100, start:"1-5 Min", drop:"No" },
@@ -252,7 +252,7 @@
             }
         });
 
-        // --- RENDER LOGIC ---
+        // --- DASHBOARD LOGIC ---
         function renderDropdowns(data) {
             const catSel = document.getElementById('category-select');
             const cats = [...new Set(data.map(s => s.cat))];
@@ -261,14 +261,11 @@
         }
 
         function loadDashboard(uid) {
-            // Initial render with default data
             renderDropdowns(window.allServices);
-
             onValue(ref(db, `users/${uid}/balance`), snap => {
-                document.getElementById('user-balance').innerText = (snap.val() || 0).toFixed(2);
+                window.userBalance = snap.val() || 0;
+                document.getElementById('user-balance').innerText = window.userBalance.toFixed(2);
             });
-
-            // Sync with Firebase if data exists
             onValue(ref(db, 'services'), (snap) => {
                 const data = snap.val();
                 if(data) {
@@ -276,7 +273,6 @@
                     renderDropdowns(window.allServices);
                 }
             });
-
             onValue(ref(db, 'settings/payment'), snap => {
                 if(snap.exists()) {
                     window.adminUpi = snap.val().upi;
@@ -311,6 +307,48 @@
             if(s) {
                 const total = (s.price / s.baseQty) * qty;
                 document.getElementById('order-cost').value = "₹" + total.toFixed(2);
+            }
+        };
+
+        // --- ORDER LOGIC (FIXED) ---
+        window.placeOrder = async () => {
+            const sid = document.getElementById('service-select').value;
+            const qty = parseInt(document.getElementById('order-qty').value);
+            const link = document.getElementById('order-link').value;
+            const s = window.allServices.find(x => x.id == sid);
+
+            if(!link) return alert("Please enter a link");
+            if(!qty || qty <= 0) return alert("Please enter valid quantity");
+
+            const totalCost = (s.price / s.baseQty) * qty;
+
+            if(window.userBalance < totalCost) {
+                alert("❌ Insufficient Balance! Please recharge your account.");
+            } else {
+                const user = auth.currentUser;
+                const newBalance = window.userBalance - totalCost;
+
+                try {
+                    // 1. Deduct Balance
+                    await update(ref(db, `users/${user.uid}`), { balance: newBalance });
+
+                    // 2. Save Order to History
+                    const orderRef = push(ref(db, 'orders'));
+                    await set(orderRef, {
+                        uid: user.uid,
+                        userEmail: user.email,
+                        serviceName: s.name,
+                        link: link,
+                        quantity: qty,
+                        cost: totalCost,
+                        status: 'Pending',
+                        timestamp: Date.now()
+                    });
+
+                    alert("✅ Order Successfully Placed!");
+                } catch(e) {
+                    alert("Error: " + e.message);
+                }
             }
         };
 
