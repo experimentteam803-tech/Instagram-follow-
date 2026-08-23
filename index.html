@@ -16,8 +16,7 @@
         .bottom-nav { background-color: #1c263c; border-top: 1px solid #2d3748; }
         .float-btn { background: linear-gradient(135deg, #3b82f6, #2563eb); box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4); }
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); }
-        .google-btn { background: white; color: #1f2937; }
-        .active-nav { color: #3b82f6 !important; }
+        .amt-btn.active { background-color: #3b82f6; border-color: #3b82f6; }
     </style>
 </head>
 <body>
@@ -25,7 +24,6 @@
     <!-- AUTH PAGE -->
     <div id="auth-screen" class="min-h-screen flex flex-col items-center justify-center p-6 bg-[#0e1628]">
         <div class="max-w-5xl w-full grid md:grid-cols-2 gap-10 items-center">
-            <!-- Instructions & Profits -->
             <div class="space-y-6">
                 <div class="flex items-center gap-3">
                     <span class="bg-blue-500 p-2 rounded-lg"><i class="fas fa-rocket text-white"></i></span>
@@ -39,14 +37,11 @@
                 </ul>
             </div>
 
-            <!-- Signup/Login Form -->
             <div class="glass p-8 rounded-3xl shadow-2xl relative z-50">
                 <h3 id="auth-title" class="text-2xl font-bold mb-6 text-white text-center">Create Account</h3>
                 <div class="space-y-4">
                     <input type="email" id="auth-email" placeholder="Email Address" class="w-full p-4 rounded-2xl outline-none transition focus:border-blue-500 text-white">
                     <input type="password" id="auth-pass" placeholder="Password" class="w-full p-4 rounded-2xl outline-none transition focus:border-blue-500 text-white">
-                    
-                    <!-- Confirm Password Field -->
                     <input type="password" id="auth-confirm-pass" placeholder="Confirm Password" class="w-full p-4 rounded-2xl outline-none transition focus:border-blue-500 text-white">
                     
                     <button id="email-auth-btn" class="w-full bg-blue-600 hover:bg-blue-700 py-4 rounded-2xl font-bold transition active:scale-95 shadow-lg shadow-blue-900/40 text-white">
@@ -59,6 +54,8 @@
                     </p>
                 </div>
             </div>
+        </div>
+    </div>
 
     <!-- MAIN APP SCREEN -->
     <div id="app-screen" class="hidden pb-24">
@@ -66,19 +63,18 @@
             <h1 class="text-xl font-bold tracking-tight text-blue-500">YOURGROWT</h1>
             <div onclick="showSection('add-funds')" class="bg-card px-4 py-1.5 rounded-lg border border-slate-700 flex items-center gap-2 cursor-pointer">
                 <span class="text-sm font-semibold text-green-400">₹<span id="user-balance">0.00</span></span>
-                <i class="fas fa-wallet"></i>
+                <i class="fas fa-wallet text-white"></i>
             </div>
         </header>
 
         <div class="p-4" id="app-banner">
             <div class="bg-blue-600 rounded-3xl p-6 shadow-xl relative overflow-hidden">
                 <p class="text-[10px] uppercase font-bold opacity-80 mb-1">Welcome back,</p>
-                <h2 class="text-2xl font-bold mb-4" id="display-name">User</h2>
+                <h2 class="text-2xl font-bold mb-4 text-white" id="display-name">User</h2>
                 <button onclick="showSection('add-funds')" class="bg-white text-blue-600 px-6 py-2 rounded-full text-xs font-bold shadow-lg">RECHARGE NOW</button>
             </div>
         </div>
 
-        <!-- Categories -->
         <div class="flex overflow-x-auto gap-3 px-4 py-2 hide-scroll" id="app-cats">
             <button onclick="filterCat('All')" class="flex-shrink-0 bg-white text-blue-600 px-6 py-2 rounded-full font-bold text-xs">All</button>
             <button onclick="filterCat('🔥 FLASH DEALS')" class="flex-shrink-0 bg-card border border-slate-700 px-5 py-2 rounded-full font-medium text-xs">Flash Deals</button>
@@ -90,66 +86,83 @@
         <main class="p-4">
             <section id="new-order" class="section">
                 <div class="bg-card rounded-3xl p-5 border border-slate-800 space-y-5">
-                    <div>
-                        <label class="text-[10px] font-bold text-slate-500 uppercase mb-2 block ml-1">Category</label>
-                        <select id="category-select" class="w-full p-4 rounded-2xl outline-none text-sm" onchange="updateServices()"></select>
-                    </div>
-                    <div>
-                        <label class="text-[10px] font-bold text-slate-500 uppercase mb-2 block ml-1">Service</label>
-                        <select id="service-select" class="w-full p-4 rounded-2xl outline-none text-sm" onchange="updateServiceInfo()"></select>
-                    </div>
-                    
+                    <select id="category-select" class="w-full p-4 rounded-2xl outline-none text-sm" onchange="updateServices()"></select>
+                    <select id="service-select" class="w-full p-4 rounded-2xl outline-none text-sm" onchange="updateServiceInfo()"></select>
                     <div class="bg-dark/50 rounded-2xl p-4 border border-slate-800 grid grid-cols-3 gap-4 text-center">
                         <div><p class="text-[9px] text-slate-500 uppercase">Start</p><p class="text-[11px] font-bold" id="s-start">INSTANT</p></div>
-                        <div><p class="text-[9px] text-slate-500 uppercase">Rate (Base)</p><p class="text-[11px] font-bold" id="s-rate">₹0</p></div>
+                        <div><p class="text-[9px] text-slate-500 uppercase">Rate</p><p class="text-[11px] font-bold" id="s-rate">₹0</p></div>
                         <div><p class="text-[9px] text-slate-500 uppercase">Drop</p><p class="text-[11px] font-bold" id="s-drop">NO</p></div>
                     </div>
-
-                    <input type="text" placeholder="Paste link here" class="w-full p-4 rounded-2xl outline-none text-sm">
-                    
+                    <input type="text" id="order-link" placeholder="Paste link here" class="w-full p-4 rounded-2xl outline-none text-sm">
                     <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="text-[10px] font-bold text-slate-500 uppercase mb-2 block ml-1">Quantity</label>
-                            <input type="number" id="order-qty" value="1000" class="w-full p-4 rounded-2xl outline-none text-sm" oninput="calculateCost()">
-                        </div>
-                        <div>
-                            <label class="text-[10px] font-bold text-slate-500 uppercase mb-2 block ml-1">Charge</label>
-                            <input type="text" id="order-cost" value="₹0.00" class="w-full p-4 rounded-2xl font-bold text-green-400" readonly>
-                        </div>
+                        <input type="number" id="order-qty" value="1000" class="w-full p-4 rounded-2xl outline-none text-sm" oninput="calculateCost()">
+                        <input type="text" id="order-cost" value="₹0.00" class="w-full p-4 rounded-2xl font-bold text-green-400" readonly>
                     </div>
-                    <button onclick="alert('Order Successful!')" class="w-full bg-blue-600 py-4 rounded-2xl font-bold text-sm">PLACE ORDER</button>
+                    <button onclick="alert('Order Placed!')" class="w-full bg-blue-600 py-4 rounded-2xl font-bold text-sm shadow-lg text-white">PLACE ORDER</button>
                 </div>
             </section>
 
             <section id="add-funds" class="section hidden">
-                <div class="bg-card rounded-3xl p-6 text-center border border-slate-800">
-                    <div class="bg-white p-3 rounded-2xl inline-block mb-4"><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=arif@upi" class="w-48 h-48"></div>
-                    <p class="text-sm">UPI ID: <b class="select-all">arif@upi</b></p>
-                    <div class="mt-6 space-y-4"><input type="text" id="utr-input" placeholder="Enter Transaction ID (UTR)" class="w-full p-4 rounded-2xl outline-none"><button class="w-full bg-green-500 py-4 rounded-2xl font-bold">VERIFY DEPOSIT</button></div>
+                <div class="bg-card rounded-3xl p-6 border border-slate-800">
+                    <div id="deposit-step-1">
+                        <h3 class="text-center font-bold mb-6 text-blue-400 uppercase">Select Deposit Amount</h3>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <button onclick="selectAmount(40)" class="amt-btn p-4 rounded-2xl border border-slate-700 font-bold">₹40</button>
+                            <button onclick="selectAmount(50)" class="amt-btn p-4 rounded-2xl border border-slate-700 font-bold">₹50</button>
+                            <button onclick="selectAmount(60)" class="amt-btn p-4 rounded-2xl border border-slate-700 font-bold">₹60</button>
+                            <button onclick="selectAmount(100)" class="amt-btn p-4 rounded-2xl border border-slate-700 font-bold">₹100</button>
+                        </div>
+                        <input type="number" id="pay-amt" placeholder="Or Enter Manual Amount" class="w-full p-4 rounded-2xl outline-none mb-6 text-center font-bold">
+                        <button onclick="goToPayment()" class="w-full bg-blue-600 py-4 rounded-2xl font-bold text-white shadow-lg">PAY NOW</button>
+                    </div>
+
+                    <div id="deposit-step-2" class="hidden text-center">
+                        <div class="bg-white p-3 rounded-2xl inline-block mb-4">
+                            <img id="qr-img" src="" class="w-48 h-48">
+                        </div>
+                        <p class="text-sm mb-2">UPI ID: <b id="upi-id" class="select-all text-blue-400">arifxz@axl</b></p>
+                        
+                        <div class="bg-red-500/10 border border-red-500/20 p-4 rounded-2xl mb-6">
+                            <p class="text-red-500 text-xs font-bold uppercase mb-1">Notice: Complete payment before time ends</p>
+                            <p class="text-2xl font-mono font-bold text-white" id="payment-timer">02:00</p>
+                        </div>
+
+                        <div class="space-y-4 text-left">
+                            <input type="text" id="utr-input" placeholder="Enter 12 Digit UTR Number" class="w-full p-4 rounded-2xl outline-none">
+                            <button onclick="submitDeposit()" class="w-full bg-green-500 py-4 rounded-2xl font-bold text-white">VERIFY DEPOSIT</button>
+                            <button onclick="resetDeposit()" class="w-full text-slate-500 text-xs font-bold uppercase">Cancel & Go Back</button>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <section id="orders" class="section hidden text-center opacity-30 py-20"><i class="fas fa-box-open text-6xl mb-4"></i><p>No orders found yet</p></section>
+            <section id="orders" class="section hidden text-center opacity-30 py-20">
+                <i class="fas fa-box-open text-6xl mb-4"></i>
+                <p>No orders found yet</p>
+            </section>
 
             <section id="account" class="section hidden text-center">
-                <img id="profile-pic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="w-24 h-24 rounded-full mx-auto border-4 border-blue-500 mb-4">
-                <p id="profile-name" class="font-bold text-xl"></p>
-                <p id="profile-email" class="text-slate-400 text-sm mb-8"></p>
+                <img id="profile-pic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="w-24 h-24 rounded-full mx-auto border-4 border-blue-500 mb-4 shadow-xl">
+                <p id="profile-name" class="font-bold text-xl text-white">User Name</p>
+                <p id="profile-email" class="text-slate-400 text-sm mb-8">email@example.com</p>
                 <button onclick="handleLogout()" class="w-full bg-red-500/10 text-red-500 py-4 rounded-2xl font-bold border border-red-500/20">LOGOUT</button>
             </section>
         </main>
 
         <nav class="bottom-nav fixed bottom-0 w-full flex justify-around items-center py-4 z-50">
-            <button onclick="showSection('orders')" class="nav-btn flex flex-col items-center gap-1 text-slate-500"><i class="fas fa-list text-xl"></i><span class="text-[10px]">Orders</span></button>
-            <div class="relative -top-8"><button onclick="showSection('new-order')" class="float-btn w-16 h-16 rounded-full flex items-center justify-center text-white text-3xl"><i class="fas fa-home"></i></button><span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] text-blue-500 font-bold">Home</span></div>
-            <button onclick="showSection('account')" class="nav-btn flex flex-col items-center gap-1 text-slate-500"><i class="fas fa-user-circle text-xl"></i><span class="text-[10px]">Account</span></button>
+            <button onclick="showSection('orders')" class="nav-btn flex flex-col items-center gap-1 text-slate-500 transition"><i class="fas fa-list text-xl"></i><span class="text-[10px]">Orders</span></button>
+            <div class="relative -top-8">
+                <button onclick="showSection('new-order')" class="float-btn w-16 h-16 rounded-full flex items-center justify-center text-white text-3xl"><i class="fas fa-home"></i></button>
+                <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] text-blue-500 font-bold">Home</span>
+            </div>
+            <button onclick="showSection('account')" class="nav-btn flex flex-col items-center gap-1 text-slate-500 transition"><i class="fas fa-user-circle text-xl"></i><span class="text-[10px]">Account</span></button>
         </nav>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-        import { getDatabase, ref, onValue, set, get } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+        import { getDatabase, ref, onValue, set, get, push } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDzmYzLlnxHZQaNkRUc_bz6sMV5toT9nxc",
@@ -165,12 +178,27 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getDatabase(app);
-        const provider = new GoogleAuthProvider();
 
-        // --- AUTH LOGIC FIXED ---
-        // --- AUTH LOGIC FIXED & GLOBAL ---
         window.isLoginMode = false;
+        window.adminUpi = "arifxz@axl";
+        let paymentTimerInterval;
 
+        // --- ALL SERVICES DATA ---
+        const defaultServices = [
+            { id:1, cat:"Instagram", name: "Insta Reel Likes", price: 20, baseQty: 1000, start:"Instant", drop:"No" },
+            { id:2, cat:"Instagram", name: "Automatic Comments", price: 25, baseQty: 100, start:"1-5 Min", drop:"No" },
+            { id:3, cat:"Instagram", name: "Manual Custom Comments", price: 35, baseQty: 100, start:"Manual", drop:"No" },
+            { id:4, cat:"Instagram", name: "Insta Reel Views [Flash]", price: 29, baseQty: 100000, start:"Instant", drop:"No" },
+            { id:5, cat:"Instagram", name: "Real Followers [Safe]", price: 49, baseQty: 3000, start:"1-10 Min", drop:"Non-Drop" },
+            { id:6, cat:"Instagram", name: "ID Reports [Account Ban]", price: 119, baseQty: 1000, start:"Instant", drop:"Elite" },
+            { id:7, cat:"YouTube", name: "YouTube Subscribers", price: 450, baseQty: 1000, start:"12H", drop:"Lifetime" },
+            { id:8, cat:"YouTube", name: "YouTube Watch Time (4k Hours)", price: 800, baseQty: 4000, start:"Slow", drop:"Stable" },
+            { id:11, cat:"Facebook", name: "FB Page Followers", price: 199, baseQty: 1000, start:"Instant", drop:"Non-Drop" },
+            { id:101, cat:"🔥 FLASH DEALS", name: "SPECIAL: 10k Followers + 10k Likes", price: 149, baseQty: 1, start:"Instant", drop:"Mixed" }
+        ];
+        window.allServices = defaultServices;
+
+        // --- AUTH LOGIC ---
         window.toggleAuthMode = () => {
             window.isLoginMode = !window.isLoginMode;
             const title = document.getElementById('auth-title');
@@ -194,42 +222,29 @@
             }
         };
 
-        // Click Listener for the Main Button
         document.getElementById('email-auth-btn').addEventListener('click', async () => {
             const email = document.getElementById('auth-email').value.trim();
             const pass = document.getElementById('auth-pass').value;
             const confirmPass = document.getElementById('auth-confirm-pass').value;
-
             if (!email || !pass) return alert("Please fill all fields");
-
             try {
                 if (window.isLoginMode) {
-                    // LOGIN
                     await signInWithEmailAndPassword(auth, email, pass);
                 } else {
-                    // SIGNUP
                     if (pass !== confirmPass) return alert("Passwords do not match!");
-                    if (pass.length < 6) return alert("Password should be at least 6 characters");
-                    
                     const res = await createUserWithEmailAndPassword(auth, email, pass);
-                    await set(ref(db, `users/${res.user.uid}`), {
-                        name: email.split('@')[0],
-                        email: email,
-                        balance: 0.00
-                    });
+                    await set(ref(db, `users/${res.user.uid}`), { name: email.split('@')[0], email: email, balance: 0.00 });
                 }
-            } catch (e) {
-                alert("Auth Error: " + e.message);
-            }
+            } catch (e) { alert("Auth Error: " + e.message); }
         });
+
         onAuthStateChanged(auth, user => {
             if(user) {
                 document.getElementById('auth-screen').classList.add('hidden');
                 document.getElementById('app-screen').classList.remove('hidden');
-                document.getElementById('display-name').innerText = user.displayName || user.email.split('@')[0];
-                document.getElementById('profile-name').innerText = user.displayName || user.email.split('@')[0];
+                document.getElementById('display-name').innerText = user.email.split('@')[0];
+                document.getElementById('profile-name').innerText = user.email.split('@')[0];
                 document.getElementById('profile-email').innerText = user.email;
-                if(user.photoURL) document.getElementById('profile-pic').src = user.photoURL;
                 loadDashboard(user.uid);
             } else {
                 document.getElementById('auth-screen').classList.remove('hidden');
@@ -237,46 +252,36 @@
             }
         });
 
-        // Yeh variable ab khali rahega, data Firebase se aayega
-        window.allServices = []; 
+        // --- RENDER LOGIC ---
+        function renderDropdowns(data) {
+            const catSel = document.getElementById('category-select');
+            const cats = [...new Set(data.map(s => s.cat))];
+            catSel.innerHTML = cats.map(c => `<option value="${c}">${c}</option>`).join('');
+            updateServices();
+        }
 
         function loadDashboard(uid) {
-            // 1. User Balance Listener
+            // Initial render with default data
+            renderDropdowns(window.allServices);
+
             onValue(ref(db, `users/${uid}/balance`), snap => {
                 document.getElementById('user-balance').innerText = (snap.val() || 0).toFixed(2);
             });
 
-            // 2. Dynamic Services Listener (Admin Panel se data lega)
+            // Sync with Firebase if data exists
             onValue(ref(db, 'services'), (snap) => {
                 const data = snap.val();
                 if(data) {
                     window.allServices = Object.values(data);
-                    const catSel = document.getElementById('category-select');
-                    const cats = [...new Set(window.allServices.map(s => s.cat))];
-                    catSel.innerHTML = cats.map(c => `<option value="${c}">${c}</option>`).join('');
-                    updateServices(); 
+                    renderDropdowns(window.allServices);
                 }
             });
 
-            // 3. Dynamic UPI/QR Listener
-            onValue(ref(db, 'settings/payment'), (snap) => {
+            onValue(ref(db, 'settings/payment'), snap => {
                 if(snap.exists()) {
-                    const upi = snap.val().upi;
-                    const upiDisplay = document.getElementById('upi-id');
-                    if(upiDisplay) upiDisplay.innerText = upi;
-                    const qrImg = document.getElementById('qr-img');
-                    if(qrImg) qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=${upi}`;
+                    window.adminUpi = snap.val().upi;
+                    document.getElementById('upi-id').innerText = window.adminUpi;
                 }
-            });
-        }
-
-        function loadDashboard(uid) {
-            const catSel = document.getElementById('category-select');
-            const cats = [...new Set(services.map(s => s.cat))];
-            catSel.innerHTML = cats.map(c => `<option value="${c}">${c}</option>`).join('');
-            updateServices();
-            onValue(ref(db, `users/${uid}/balance`), snap => {
-                document.getElementById('user-balance').innerText = (snap.val() || 0).toFixed(2);
             });
         }
 
@@ -293,7 +298,7 @@
             const s = window.allServices.find(x => x.id == sid);
             if(s) {
                 document.getElementById('s-start').innerText = s.start || "INSTANT";
-                document.getElementById('s-rate').innerText = `₹${s.price}/${s.baseQty.toLocaleString()}`;
+                document.getElementById('s-rate').innerText = `₹${s.price}`;
                 document.getElementById('s-drop').innerText = s.drop || "NO";
                 calculateCost();
             }
@@ -308,30 +313,61 @@
                 document.getElementById('order-cost').value = "₹" + total.toFixed(2);
             }
         };
+
+        // --- DEPOSIT LOGIC ---
+        window.selectAmount = (amt) => {
+            document.getElementById('pay-amt').value = amt;
+            document.querySelectorAll('.amt-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        };
+
+        window.goToPayment = () => {
+            const amt = document.getElementById('pay-amt').value;
+            if(!amt || amt <= 0) return alert("Please select or enter amount");
+            document.getElementById('deposit-step-1').classList.add('hidden');
+            document.getElementById('deposit-step-2').classList.remove('hidden');
+            const upiLink = `upi://pay?pa=${window.adminUpi}&am=${amt}&cu=INR`;
+            document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiLink)}`;
+            startPaymentTimer();
+        };
+
+        function startPaymentTimer() {
+            clearInterval(paymentTimerInterval);
+            let time = 120;
+            const display = document.getElementById('payment-timer');
+            paymentTimerInterval = setInterval(() => {
+                let mins = Math.floor(time / 60);
+                let secs = time % 60;
+                display.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                if (--time < 0) {
+                    clearInterval(paymentTimerInterval);
+                    alert("Payment time expired!");
+                    resetDeposit();
+                }
+            }, 1000);
+        }
+
+        window.resetDeposit = () => {
+            clearInterval(paymentTimerInterval);
+            document.getElementById('deposit-step-1').classList.remove('hidden');
+            document.getElementById('deposit-step-2').classList.add('hidden');
+        };
+
         window.submitDeposit = async () => {
-            const amt = parseFloat(document.getElementById('pay-amt')?.value || 0);
-            const utr = document.getElementById('utr-input')?.value; // Apni ID check karein
+            const amt = parseFloat(document.getElementById('pay-amt').value);
+            const utr = document.getElementById('utr-input').value;
             const user = auth.currentUser;
-
-            if(!amt || !utr) return alert("Please enter Amount and UTR number");
-            if(utr.length < 10) return alert("Invalid UTR Number");
-
+            if(!utr || utr.length < 10) return alert("Enter valid 12 digit UTR");
             try {
                 const depRef = push(ref(db, 'deposits'));
-                await set(depRef, {
-                    uid: user.uid,
-                    userEmail: user.email,
-                    amount: amt,
-                    utr: utr,
-                    status: 'Pending',
-                    timestamp: Date.now()
-                });
-                alert("Deposit request submitted! Admin will verify soon.");
-                document.getElementById('utr-input').value = "";
-            } catch(e) {
-                alert("Error: " + e.message);
-            }
+                await set(depRef, { uid: user.uid, userEmail: user.email, amount: amt, utr: utr, status: 'Pending', timestamp: Date.now() });
+                alert("Request Sent! Admin will verify soon.");
+                resetDeposit();
+                showSection('new-order');
+            } catch(e) { alert(e.message); }
         };
+
+        window.handleLogout = () => signOut(auth);
 
         window.showSection = (id) => {
             document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
