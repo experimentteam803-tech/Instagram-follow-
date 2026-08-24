@@ -70,7 +70,7 @@
     <div id="auth-screen" class="min-h-screen flex flex-col items-center justify-center p-6">
         <div class="max-w-5xl w-full grid md:grid-cols-2 gap-10 items-center">
             
-            <!-- Highlight Services (Instructions & Profits) -->
+            <!-- Highlight Services -->
             <div class="space-y-6">
                 <div class="flex items-center gap-3">
                     <span class="bg-blue-500 p-2 rounded-lg shadow-lg"><i class="fas fa-rocket text-white text-2xl"></i></span>
@@ -194,7 +194,7 @@
                     </div>
                     <div id="deposit-step-2" class="hidden">
                         <div class="bg-white p-4 rounded-[2rem] inline-block mb-6 shadow-inner"><img id="qr-img" src="" class="w-56 h-56"></div>
-                        <p class="text-sm font-bold text-slate-400 mb-2">UPI ID: <span id="upi-id" class="text-blue-400">arifkhan11222@ibl</span></p>
+                        <p class="text-sm font-bold text-slate-400 mb-2">UPI ID: <span id="upi-id" class="text-blue-400">arifxz@axl</span></p>
                         <div class="bg-rose-500/10 border border-rose-500/20 p-5 rounded-3xl mb-8">
                             <p class="text-rose-500 text-[10px] font-black uppercase mb-2">Complete payment within</p>
                             <p class="text-3xl font-black text-white" id="payment-timer">02:00</p>
@@ -354,7 +354,8 @@
             const cat = document.getElementById('category-select').value;
             const sSel = document.getElementById('service-select');
             const filtered = window.allServices.filter(s => s.cat === cat);
-            sSel.innerHTML = filtered.map(s => `<option value="${s.id}">${s.name} - ₹${s.price}</option>`).join('');
+            // FIXED: Added baseQty to the display text
+            sSel.innerHTML = filtered.map(s => `<option value="${s.id}">${s.baseQty.toLocaleString()} ${s.name} - ₹${s.price}</option>`).join('');
             const card = document.getElementById('order-card');
             if(cat === '🔥 FLASH DEALS') card.classList.add('flash-glow');
             else card.classList.remove('flash-glow');
