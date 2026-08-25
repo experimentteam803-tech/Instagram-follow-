@@ -8,15 +8,81 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #3b82f6; --secondary: #1d4ed8; --bg-dark: #0a0f1e; --card-dark: #161e31; --flash: #f43f5e; }
-        body { font-family: 'Poppins', sans-serif; background-color: var(--bg-dark); color: #e2e8f0; min-height: 100vh; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
-        .glass-card { background: rgba(22, 30, 49, 0.9); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 2rem; box-shadow: 0 15px 35px rgba(0,0,0,0.3); }
-        .premium-gradient { background: linear-gradient(135deg, var(--primary), var(--secondary)); }
-        .service-card { background: #1c263c; border: 1px solid rgba(255,255,255,0.1); border-radius: 1.2rem; padding: 12px 16px; display: flex; align-items: center; gap: 15px; transition: 0.3s; cursor: pointer; margin-bottom: 10px; }
-        .service-card:active { transform: scale(0.97); background: #243156; }
-        .service-card.selected { border-color: var(--primary); background: rgba(59, 130, 246, 0.1); box-shadow: 0 0 15px rgba(59, 130, 246, 0.2); }
-        .price-badge { background: rgba(255,255,255,0.05); padding: 6px 12px; border-radius: 1rem; font-weight: 800; color: #fff; min-width: 60px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
-        .boost-header { background: linear-gradient(to right, rgba(59, 130, 246, 0.1), rgba(0,0,0,0)); border-radius: 1.5rem; padding: 20px; border: 1px solid rgba(59, 130, 246, 0.2); }
+        :root {
+            --primary: #3b82f6;
+            --secondary: #1d4ed8;
+            --bg-dark: #0a0f1e;
+            --card-dark: #161e31;
+            --flash: #f43f5e;
+        }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--bg-dark);
+            color: #e2e8f0; 
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .glass-card {
+            background: rgba(22, 30, 49, 0.9);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 2rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+        .premium-gradient {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
+        /* Professional Service Card */
+        .service-card {
+            background: linear-gradient(145deg, #1e293b, #161e31);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            border-radius: 1.5rem;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        .service-card:active { transform: scale(0.97); }
+        .service-card.selected { 
+            border: 2px solid var(--primary); 
+            background: rgba(59, 130, 246, 0.15);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .icon-box {
+            width: 45px; height: 45px;
+            border-radius: 1rem;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+        .bg-insta { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); color: white; }
+        .bg-yt { background: #ff0000; color: white; }
+        .bg-fb { background: #1877f2; color: white; }
+        .bg-flash { background: linear-gradient(45deg, #f43f5e, #fb923c); color: white; }
+
+        .price-tag {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 5px 12px;
+            border-radius: 0.8rem;
+            font-weight: 900;
+            color: #3b82f6;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            font-size: 0.85rem;
+        }
+
+        .boost-header {
+            background: linear-gradient(to right, rgba(59, 130, 246, 0.1), rgba(0,0,0,0));
+            border-radius: 1.5rem;
+            padding: 20px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
         .hide-scroll::-webkit-scrollbar { display: none; }
         input, select { background: #0f172a !important; border: 1px solid #1e293b !important; border-radius: 1rem !important; padding: 1rem !important; color: #f8fafc !important; }
         .font-black-bold { font-weight: 900 !important; }
@@ -63,7 +129,7 @@
 
         <main class="p-4 space-y-6">
             <section id="new-order" class="section">
-                <div class="boost-header mb-6 relative overflow-hidden">
+                <div class="boost-header mb-6">
                     <h2 class="text-xl font-black text-white mb-1">Instagram Boost</h2>
                     <p class="text-[10px] text-slate-400 mb-4">Real engagement delivered fast & safely</p>
                     <div class="grid grid-cols-3 gap-2">
@@ -83,14 +149,9 @@
                 <div id="service-list-container" class="space-y-3 mb-8"></div>
 
                 <div id="order-form-box" class="glass-card p-6 space-y-5 hidden">
-                    <div class="bg-blue-950/50 rounded-2xl p-4 grid grid-cols-3 gap-2 text-center border border-white/5">
-                        <div><p class="text-[8px] text-slate-500 uppercase font-bold">Min</p><p class="text-[10px] font-black text-blue-400" id="s-min">0</p></div>
-                        <div><p class="text-[8px] text-slate-500 uppercase font-bold">Rate/1k</p><p class="text-[10px] font-black text-blue-400" id="s-rate">₹0</p></div>
-                        <div><p class="text-[8px] text-slate-500 uppercase font-bold">Max</p><p class="text-[10px] font-black text-blue-400" id="s-max">0</p></div>
-                    </div>
                     <input type="text" id="order-link" placeholder="Paste your link here..." class="w-full outline-none">
                     <div class="grid grid-cols-2 gap-4">
-                        <input type="number" id="order-qty" value="100" class="w-full outline-none font-bold" oninput="calculateCost()">
+                        <input type="number" id="order-qty" value="1000" class="w-full outline-none font-bold" oninput="calculateCost()">
                         <div class="bg-green-500/10 rounded-2xl flex items-center justify-center border border-green-500/20">
                             <input type="text" id="order-cost" value="₹0.00" class="bg-transparent border-none text-center font-black text-green-400 w-full" readonly>
                         </div>
@@ -114,7 +175,7 @@
                         <div class="bg-white p-4 rounded-[2rem] inline-block mb-6 shadow-inner"><img id="qr-img" src="" class="w-56 h-56"></div>
                         <p class="text-sm font-bold text-slate-400 mb-2">UPI ID: <span id="upi-id" class="text-blue-400">arifxz@axl</span></p>
                         <div class="bg-rose-500/10 border border-rose-500/20 p-5 rounded-3xl mb-8">
-                            <p class="text-rose-500 text-[10px] font-black uppercase mb-2">Complete payment within</p>
+                            <p class="text-rose-600 text-[10px] font-black uppercase mb-2">Complete payment within</p>
                             <p class="text-3xl font-black text-white" id="payment-timer">02:00</p>
                         </div>
                         <div class="space-y-4">
@@ -135,7 +196,7 @@
                 <div class="glass-card p-10">
                     <div class="w-24 h-24 premium-gradient rounded-full mx-auto flex items-center justify-center text-white text-4xl mb-6 shadow-2xl"><i class="fas fa-user"></i></div>
                     <p id="profile-name" class="font-black text-2xl text-white mb-1">User Name</p>
-                    <p id="profile-email" class="text-slate-400 text-sm mb-10">email@example.com</p>
+                    <p id="profile-email" class="text-slate-500 text-sm mb-10">email@example.com</p>
                     <button onclick="handleLogout()" class="w-full bg-rose-500/10 text-rose-600 py-5 rounded-2xl font-black border border-rose-500/20 active:scale-95 transition">LOGOUT ACCOUNT</button>
                 </div>
             </section>
@@ -168,36 +229,31 @@
         const auth = getAuth(app);
         const db = getDatabase(app);
 
-        const JAP_API_URL = "https://justanotherpanel.com/api/v2";
-        const JAP_API_KEY = "b813adb69a6f3f484e23a3db407ec201";
-        const INR_RATE = 85; 
-
         window.isLoginMode = false;
         window.adminUpi = "arifxz@axl";
         window.userBalance = 0;
-        window.allServices = [];
         window.selectedService = null;
         let paymentTimerInterval;
 
-        // --- DEFAULT SERVICES ---
-        const defaultServices = [
-            { id:101, cat:"🔥 FLASH DEALS", name: "Instagram 10k Followers [Special]", price: 99, min: 10000, max: 10000 },
-            { id:102, cat:"🔥 FLASH DEALS", name: "1k Instagram ID Reports [Elite]", price: 99, min: 1000, max: 1000 },
-            { id:1, cat:"Instagram", name: "1000 Insta Reel Likes", price: 10, min: 100, max: 50000 },
-            { id:5, cat:"Instagram", name: "3000 Real Followers [Safe]", price: 49, min: 100, max: 10000 },
-            { id:7, cat:"YouTube", name: "1000 YouTube Subscribers", price: 150, min: 50, max: 5000 }
+        // --- MANUAL SERVICES (RESTORED) ---
+        const manualServices = [
+            { id:101, cat:"🔥 FLASH DEALS", name: "Instagram 10k Followers [Special]", price: 99, baseQty: 10000 },
+            { id:102, cat:"🔥 FLASH DEALS", name: "1k Instagram ID Reports [Elite]", price: 119, baseQty: 1000 },
+            { id:1, cat:"Instagram", name: "1000 Insta Reel Likes", price: 20, baseQty: 1000 },
+            { id:2, cat:"Instagram", name: "100 Automatic Comments", price: 25, baseQty: 100 },
+            { id:3, cat:"Instagram", name: "100 Manual Custom Comments", price: 35, baseQty: 100 },
+            { id:4, cat:"Instagram", name: "100k Insta Reel Views [Flash]", price: 29, baseQty: 100000 },
+            { id:5, cat:"Instagram", name: "3000 Real Followers [Safe]", price: 49, baseQty: 3000 },
+            { id:7, cat:"YouTube", name: "1000 YouTube Subscribers", price: 450, baseQty: 1000 },
+            { id:8, cat:"YouTube", name: "4000H YouTube Watch Time", price: 800, baseQty: 4000 }
         ];
-
-        // Helper to safely set text
-        const safeSetText = (id, text) => {
-            const el = document.getElementById(id);
-            if(el) el.innerText = text;
-        };
 
         window.toggleAuthMode = () => {
             window.isLoginMode = !window.isLoginMode;
-            safeSetText('auth-title', window.isLoginMode ? "Login to Account" : "Create Account");
-            safeSetText('email-auth-btn', window.isLoginMode ? "LOGIN" : "GET STARTED");
+            const title = document.getElementById('auth-title');
+            const btn = document.getElementById('email-auth-btn');
+            if(title) title.innerText = window.isLoginMode ? "Login to Account" : "Create Account";
+            if(btn) btn.innerText = window.isLoginMode ? "LOGIN" : "GET STARTED";
             const cp = document.getElementById('auth-confirm-pass');
             if(cp) cp.style.display = window.isLoginMode ? "none" : "block";
         };
@@ -219,9 +275,12 @@
             if(user) {
                 document.getElementById('auth-screen').classList.add('hidden');
                 document.getElementById('app-screen').classList.remove('hidden');
-                safeSetText('display-name', user.email.split('@')[0]);
-                safeSetText('profile-name', user.email.split('@')[0]);
-                safeSetText('profile-email', user.email);
+                const dn = document.getElementById('display-name');
+                const pn = document.getElementById('profile-name');
+                const pe = document.getElementById('profile-email');
+                if(dn) dn.innerText = user.email.split('@')[0];
+                if(pn) pn.innerText = user.email.split('@')[0];
+                if(pe) pe.innerText = user.email;
                 loadDashboard(user.uid);
             } else {
                 document.getElementById('auth-screen').classList.remove('hidden');
@@ -229,39 +288,28 @@
             }
         });
 
-        async function fetchJAPServices() {
-            try {
-                const proxy = "https://api.allorigins.win/get?url=";
-                const target = encodeURIComponent(`${JAP_API_URL}?key=${JAP_API_KEY}&action=services`);
-                const response = await fetch(proxy + target);
-                const data = await response.json();
-                const services = JSON.parse(data.contents);
-
-                if(services && Array.isArray(services)) {
-                    const japServices = services.map(s => ({
-                        id: s.service, cat: s.category, name: s.name,
-                        price: parseFloat(s.rate) * INR_RATE, min: parseInt(s.min), max: parseInt(s.max)
-                    }));
-                    window.allServices = [...defaultServices, ...japServices];
-                } else { window.allServices = defaultServices; }
-            } catch (e) { window.allServices = defaultServices; }
-            renderServiceCards('All');
-        }
-
         function renderServiceCards(category) {
             const container = document.getElementById('service-list-container');
             if(!container) return;
             container.innerHTML = "";
-            const filtered = category === 'All' ? window.allServices : window.allServices.filter(s => s.cat.includes(category));
+            const filtered = category === 'All' ? manualServices : manualServices.filter(s => s.cat.includes(category));
             
-            filtered.slice(0, 40).forEach(s => {
-                const icon = s.cat.includes('Instagram') ? 'fab fa-instagram' : s.cat.includes('YouTube') ? 'fab fa-youtube' : 'fas fa-bolt';
+            filtered.forEach(s => {
+                let iconClass = "fas fa-bolt";
+                let bgClass = "bg-blue-500/10";
+                if(s.cat.includes('Instagram')) { iconClass = "fab fa-instagram"; bgClass = "bg-insta"; }
+                else if(s.cat.includes('YouTube')) { iconClass = "fab fa-youtube"; bgClass = "bg-yt"; }
+                else if(s.cat.includes('FLASH')) { iconClass = "fas fa-fire"; bgClass = "bg-flash"; }
+
                 const card = document.createElement('div');
                 card.className = "service-card";
                 card.innerHTML = `
-                    <div class="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center text-xl text-blue-400"><i class="${icon}"></i></div>
-                    <div class="flex-1"><h4 class="text-sm font-bold text-white">${s.name}</h4><p class="text-[9px] text-slate-500 uppercase font-bold">${s.cat}</p></div>
-                    <div class="price-badge">₹${s.price.toFixed(0)}</div>`;
+                    <div class="icon-box ${bgClass}"><i class="${iconClass}"></i></div>
+                    <div class="flex-1">
+                        <h4 class="text-sm font-bold text-white">${s.name}</h4>
+                        <p class="text-[9px] text-slate-500 uppercase font-bold">${s.cat}</p>
+                    </div>
+                    <div class="price-tag">₹${s.price}</div>`;
                 card.onclick = () => selectService(s, card);
                 container.appendChild(card);
             });
@@ -273,24 +321,21 @@
             element.classList.add('selected');
             const form = document.getElementById('order-form-box');
             if(form) form.classList.remove('hidden');
-            safeSetText('s-min', service.min);
-            safeSetText('s-rate', `₹${service.price.toFixed(2)}`);
-            safeSetText('s-max', service.max);
             calculateCost();
         }
 
         function loadDashboard(uid) {
-            window.allServices = defaultServices;
             renderServiceCards('All');
             onValue(ref(db, `users/${uid}/balance`), snap => {
                 window.userBalance = snap.val() || 0;
-                safeSetText('user-balance', window.userBalance.toFixed(2));
+                const balEl = document.getElementById('user-balance');
+                if(balEl) balEl.innerText = window.userBalance.toFixed(2);
             });
-            fetchJAPServices();
             onValue(ref(db, 'settings/payment'), snap => {
                 if(snap.exists()) {
                     window.adminUpi = snap.val().upi;
-                    safeSetText('upi-id', window.adminUpi);
+                    const upiEl = document.getElementById('upi-id');
+                    if(upiEl) upiEl.innerText = window.adminUpi;
                 }
             });
         }
@@ -298,7 +343,7 @@
         window.calculateCost = () => {
             const qty = document.getElementById('order-qty').value;
             if(window.selectedService) {
-                const total = (window.selectedService.price / 1000) * qty;
+                const total = (window.selectedService.price / window.selectedService.baseQty) * qty;
                 const costEl = document.getElementById('order-cost');
                 if(costEl) costEl.value = "₹" + total.toFixed(2);
             }
@@ -310,8 +355,8 @@
             const link = document.getElementById('order-link').value;
             const s = window.selectedService;
             if(!link) return alert("Enter link");
-            const totalCost = (s.price / 1000) * qty;
-            if(window.userBalance < totalCost) return alert("Insufficient Balance!");
+            const totalCost = (s.price / s.baseQty) * qty;
+            if(window.userBalance < totalCost) return alert("❌ Insufficient Balance!");
 
             try {
                 await update(ref(db, `users/${auth.currentUser.uid}`), { balance: window.userBalance - totalCost });
@@ -326,14 +371,17 @@
             if(!amt || amt <= 0) return alert("Select amount");
             document.getElementById('deposit-step-1').classList.add('hidden');
             document.getElementById('deposit-step-2').classList.remove('hidden');
-            document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent('upi://pay?pa='+window.adminUpi+'&am='+amt+'&cu=INR')}`;
+            const payeeName = "ARIFUL HOQUE"; 
+            const upiLink = `upi://pay?pa=${window.adminUpi}&pn=${encodeURIComponent(payeeName)}&am=${amt}&cu=INR&mode=02&purpose=00`;
+            document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiLink)}`;
             startPaymentTimer();
         };
         function startPaymentTimer() {
             let time = 120;
             paymentTimerInterval = setInterval(() => {
                 let mins = Math.floor(time / 60), secs = time % 60;
-                safeSetText('payment-timer', `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`);
+                const timerEl = document.getElementById('payment-timer');
+                if(timerEl) timerEl.innerText = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
                 if (--time < 0) { clearInterval(paymentTimerInterval); resetDeposit(); }
             }, 1000);
         }
