@@ -2,411 +2,1158 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yourgrowt - Premium Social Growth</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <title>Mining Father - Cloud Mining & Rewards</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Web Ad Fallbacks (Agar browser me khule) -->
+    <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
+    <script src="//libtl.com/sdk.js" data-zone="9969043" data-sdk="show_9969043" async></script>
+
     <style>
         :root {
-            --primary: #3b82f6;
-            --secondary: #1d4ed8;
-            --bg-dark: #0a0f1e;
-            --card-dark: #161e31;
-            --flash: #f43f5e;
+            --bg-base: #070B12;
+            --bg-card: #0F172A;
+            --bg-card-subtle: #172238;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(0, 242, 254, 0.35);
+
+            --accent-cyan: #00F2FE;
+            --accent-blue: #4FACFE;
+            --accent-gold: #FFD200;
+            --accent-green: #10B981;
+            --accent-red: #EF4444;
+
+            --text-primary: #FFFFFF;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+            --font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
         }
-        body { 
-            font-family: 'Poppins', sans-serif; 
-            background-color: var(--bg-dark);
-            color: #e2e8f0; 
-            min-height: 100vh;
-            overflow-x: hidden;
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-family);
             -webkit-tap-highlight-color: transparent;
         }
-        .glass-card {
-            background: rgba(22, 30, 49, 0.9);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 2rem;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+
+        body {
+            background-color: var(--bg-base);
+            background-image: 
+                radial-gradient(ellipse 90% 40% at 50% 0%, rgba(0, 242, 254, 0.08), transparent),
+                radial-gradient(ellipse 60% 40% at 50% 100%, rgba(79, 172, 254, 0.05), transparent);
+            color: var(--text-primary);
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            user-select: none;
+            display: flex;
+            flex-direction: column;
         }
-        .premium-gradient {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+
+        #app {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
         }
-        
-        /* Professional Service Card */
-        .service-card {
-            background: linear-gradient(145deg, #1e293b, #161e31);
-            border: 1px solid rgba(59, 130, 246, 0.1);
-            border-radius: 1.5rem;
-            padding: 15px;
+
+        /* Top Header */
+        header {
+            padding: calc(var(--safe-top) + 12px) 16px 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            z-index: 50;
+        }
+
+        .header-profile {
             display: flex;
             align-items: center;
-            gap: 15px;
-            transition: all 0.3s ease;
+            gap: 10px;
             cursor: pointer;
-            margin-bottom: 10px;
-        }
-        .service-card:active { transform: scale(0.97); }
-        .service-card.selected { 
-            border: 2px solid var(--primary); 
-            background: rgba(59, 130, 246, 0.15);
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
         }
 
-        .icon-box {
-            width: 45px; height: 45px;
-            border-radius: 1rem;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.4rem;
-            flex-shrink: 0;
-        }
-        .bg-insta { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); color: white; }
-        .bg-yt { background: #ff0000; color: white; }
-        .bg-fb { background: #1877f2; color: white; }
-        .bg-flash { background: linear-gradient(45deg, #f43f5e, #fb923c); color: white; }
-
-        .price-tag {
-            background: rgba(255, 255, 255, 0.08);
-            padding: 5px 12px;
-            border-radius: 0.8rem;
-            font-weight: 900;
-            color: #3b82f6;
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            font-size: 0.85rem;
+        .header-profile img {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-cyan);
+            object-fit: cover;
         }
 
-        .boost-header {
-            background: linear-gradient(to right, rgba(59, 130, 246, 0.1), rgba(0,0,0,0));
-            border-radius: 1.5rem;
+        .header-user-info { display: flex; flex-direction: column; }
+        .header-user-name { font-size: 14px; font-weight: 700; color: #FFF; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .header-user-tag { font-size: 11px; color: var(--text-secondary); font-weight: 500; }
+
+        .icon-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border);
+            color: #FFF;
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* Scroll Area */
+        main {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 16px 16px calc(var(--safe-bottom) + 82px) 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            scrollbar-width: none;
+        }
+        main::-webkit-scrollbar { display: none; }
+
+        .section-view { display: none; flex-direction: column; gap: 16px; animation: fadeIn 0.2s ease; }
+        .section-view.active { display: flex; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Balance Hero Card */
+        .balance-hero {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.98));
+            border: 1px solid var(--border);
+            border-radius: 20px;
             padding: 20px;
-            border: 1px solid rgba(59, 130, 246, 0.2);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
-        .hide-scroll::-webkit-scrollbar { display: none; }
-        input, select { background: #0f172a !important; border: 1px solid #1e293b !important; border-radius: 1rem !important; padding: 1rem !important; color: #f8fafc !important; }
-        .font-black-bold { font-weight: 900 !important; }
+        .balance-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .primary-balance { display: flex; align-items: baseline; gap: 8px; margin-bottom: 12px; }
+        .primary-balance .coin-val { font-size: 34px; font-weight: 800; color: var(--accent-gold); }
+        .primary-balance .coin-symbol { font-size: 16px; font-weight: 700; color: var(--text-secondary); }
+
+        .secondary-currencies {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .curr-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 8px 12px;
+        }
+
+        .curr-box .curr-title { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+        .curr-box .curr-amount { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-top: 2px; }
+
+        /* Quick Actions */
+        .quick-actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .quick-action-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 12px 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        .quick-action-btn:active { transform: scale(0.95); }
+        .quick-action-btn .btn-icon { font-size: 20px; }
+        .quick-action-btn .btn-text { font-size: 11px; font-weight: 600; color: var(--text-secondary); }
+
+        /* Mining Card */
+        .mining-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .mining-header { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .badge { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
+        .badge-active { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge-idle { background: rgba(148, 163, 184, 0.15); color: var(--text-secondary); border: 1px solid var(--border); }
+
+        .mining-dial {
+            position: relative;
+            width: 190px;
+            height: 190px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 6px 0 16px 0;
+        }
+
+        .mining-dial svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+        .mining-dial-bg { fill: none; stroke: rgba(255, 255, 255, 0.06); stroke-width: 10; }
+        .mining-dial-progress {
+            fill: none;
+            stroke: var(--accent-cyan);
+            stroke-width: 10;
+            stroke-linecap: round;
+            stroke-dasharray: 534;
+            stroke-dashoffset: 534;
+            transition: stroke-dashoffset 0.8s ease;
+        }
+
+        .mining-dial-content { position: absolute; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .dial-icon { font-size: 36px; margin-bottom: 4px; }
+        .dial-value { font-size: 20px; font-weight: 800; color: #FFF; }
+        .dial-sub { font-size: 11px; font-weight: 600; color: var(--text-muted); }
+
+        .mining-stats-row { display: grid; grid-template-columns: repeat(3, 1fr); width: 100%; gap: 8px; margin-bottom: 16px; }
+        .mini-stat { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); border-radius: 12px; padding: 8px; text-align: center; }
+        .mini-stat-label { font-size: 10px; color: var(--text-muted); font-weight: 600; }
+        .mini-stat-val { font-size: 13px; font-weight: 700; color: #FFF; margin-top: 2px; }
+
+        /* Buttons */
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            color: #050811;
+            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-primary:disabled { opacity: 0.5; background: #253349; color: var(--text-muted); box-shadow: none; cursor: not-allowed; }
+        .btn-gold { background: linear-gradient(135deg, #FFD200, #F7931A); color: #000; box-shadow: 0 4px 20px rgba(255, 210, 0, 0.25); }
+        .btn-outline { background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border); color: #FFF; }
+
+        /* Category Filter Chips */
+        .filter-scroller { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+        .filter-scroller::-webkit-scrollbar { display: none; }
+        .chip-tab { padding: 8px 14px; border-radius: 12px; font-size: 12px; font-weight: 600; white-space: nowrap; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-secondary); cursor: pointer; }
+        .chip-tab.active { background: rgba(0, 242, 254, 0.12); color: var(--accent-cyan); border-color: rgba(0, 242, 254, 0.4); }
+
+        /* Task & Ad Cards */
+        .task-card, .ad-network-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .task-card-top, .ad-card-top { display: flex; justify-content: space-between; align-items: center; }
+        .task-icon { width: 44px; height: 44px; border-radius: 12px; object-fit: cover; border: 1px solid var(--border); }
+        .task-info { flex: 1; margin-left: 12px; }
+        .task-name { font-size: 14px; font-weight: 700; color: #FFF; }
+        .task-meta { display: flex; align-items: center; gap: 8px; margin-top: 3px; font-size: 12px; }
+
+        /* Wallet Grid */
+        .wallet-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .wallet-card-cell { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 14px 10px; text-align: center; }
+        .wallet-card-cell .label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
+        .wallet-card-cell .val { font-size: 16px; font-weight: 800; color: #FFF; margin-top: 4px; }
+
+        .swap-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+        .swap-input-group { background: var(--bg-base); border: 1px solid var(--border); border-radius: 14px; padding: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .swap-input-group input { background: transparent; border: none; color: #FFF; font-size: 18px; font-weight: 700; width: 60%; outline: none; }
+        .swap-input-group select { background: var(--bg-card-subtle); border: 1px solid var(--border); color: #FFF; padding: 6px 10px; border-radius: 10px; font-size: 13px; font-weight: 600; outline: none; }
+
+        /* Modals & Bottom Navigation */
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            align-items: flex-end;
+            justify-content: center;
+        }
+        .modal-backdrop.open { display: flex; }
+        .modal-sheet {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+            border-radius: 24px 24px 0 0;
+            padding: 22px 20px calc(var(--safe-bottom) + 24px) 20px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 88vh;
+            overflow-y: auto;
+        }
+
+        .sheet-handle { width: 36px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 16px auto; }
+        .form-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; display: block; }
+        .form-input { width: 100%; background: var(--bg-base); border: 1px solid var(--border); color: #FFF; padding: 12px 14px; border-radius: 12px; font-size: 14px; margin-bottom: 14px; outline: none; }
+        .form-input:focus { border-color: var(--accent-cyan); }
+        .warning-callout { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 12px; font-size: 12px; color: #FCA5A5; margin-bottom: 14px; }
+
+        nav.bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: calc(var(--safe-bottom) + 64px);
+            padding-bottom: var(--safe-bottom);
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(16px);
+            border-top: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            align-items: center;
+            z-index: 50;
+        }
+        .nav-tab { background: none; border: none; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
+        .nav-tab.active { color: var(--accent-cyan); }
+        .nav-tab .tab-icon { font-size: 20px; }
+        .nav-tab .tab-name { font-size: 10px; font-weight: 700; }
+
+        /* Toast Container */
+        #toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 200; display: flex; flex-direction: column; gap: 8px; width: 90%; max-width: 360px; pointer-events: none; }
+        .toast { background: rgba(15, 23, 42, 0.95); border: 1px solid var(--border); border-radius: 14px; padding: 12px 16px; font-size: 13px; font-weight: 600; color: #FFF; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        
+        .history-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; }
     </style>
 </head>
-<body class="pb-24">
+<body>
 
-    <!-- AUTH PAGE -->
-    <div id="auth-screen" class="min-h-screen flex flex-col items-center justify-center p-6">
-        <div class="max-w-5xl w-full grid md:grid-cols-2 gap-10 items-center">
-            <div class="space-y-6">
-                <div class="flex items-center gap-3">
-                    <span class="bg-blue-500 p-2 rounded-lg shadow-lg"><i class="fas fa-rocket text-white text-2xl"></i></span>
-                    <h1 class="text-4xl font-black tracking-tighter text-white uppercase font-black-bold">Yourgrowt</h1>
-                </div>
-                <h2 class="text-2xl font-bold text-blue-400">Join the Best SMM Panel</h2>
-                <ul class="space-y-5 text-slate-300">
-                    <li class="flex gap-4 items-start"><div class="bg-green-500/20 p-1 rounded-full"><i class="fas fa-check-circle text-green-500"></i></div><span><b class="text-white">Flash Sale:</b> Instagram 10k Followers only <b class="text-blue-400">₹99</b>.</span></li>
-                    <li class="flex gap-4 items-start"><div class="bg-red-500/20 p-1 rounded-full"><i class="fas fa-shield-virus text-red-400"></i></div><span><b class="text-white">Ban Services:</b> 1k Instagram ID Reports for <b class="text-blue-400">₹119</b>.</span></li>
-                </ul>
+    <div id="toast-container"></div>
+
+    <!-- Login / Registration Modal (Runs on fresh install) -->
+    <div class="modal-backdrop" id="modal-auth" style="z-index: 300;">
+        <div class="modal-sheet" style="border-radius: 24px; margin-bottom: auto; margin-top: auto; max-width: 380px;">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <h2 style="font-size: 22px; font-weight: 800; color: #FFF;">Mining <span style="color:var(--accent-cyan);">Father</span></h2>
+                <p style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Sign in to access your cloud wallet & mining session</p>
             </div>
-            <div class="glass-card p-8 space-y-5 relative z-50">
-                <h3 id="auth-title" class="text-2xl font-bold text-center text-white">Create Account</h3>
-                <div class="space-y-4">
-                    <input type="email" id="auth-email" placeholder="Email Address" class="w-full outline-none">
-                    <input type="password" id="auth-pass" placeholder="Password" class="w-full outline-none">
-                    <input type="password" id="auth-confirm-pass" placeholder="Confirm Password" class="w-full outline-none">
-                    <button id="email-auth-btn" class="w-full premium-gradient py-4 rounded-2xl font-bold text-white shadow-xl active:scale-95 transition">GET STARTED</button>
-                    <p class="text-center text-sm text-slate-400 mt-4">Already have an account? <button type="button" onclick="toggleAuthMode()" id="toggle-link" class="text-blue-400 font-bold ml-1">Login</button></p>
-                </div>
+
+            <label class="form-label">PHONE NUMBER OR USERNAME</label>
+            <input type="text" class="form-input" id="auth-username" placeholder="e.g. 9876543210">
+
+            <label class="form-label">PIN / PASSWORD</label>
+            <input type="password" class="form-input" id="auth-password" placeholder="Enter 4-6 digit PIN">
+
+            <div id="auth-referral-group">
+                <label class="form-label">INVITE / REFERRAL CODE (OPTIONAL)</label>
+                <input type="text" class="form-input" id="auth-ref-code" placeholder="Enter Friend's Code">
             </div>
+
+            <button class="btn-primary" id="btn-auth-submit" onclick="App.handleAuth()" style="margin-top: 8px;">
+                🚀 Login / Create Account
+            </button>
+            <p style="font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 14px;">100% Free & Secure. Protected by Cloud Firewall.</p>
         </div>
     </div>
 
-    <!-- MAIN APP SCREEN -->
-    <div id="app-screen" class="hidden">
-        <header class="p-4 flex justify-between items-center sticky top-0 z-50 bg-[#0a0f1e]/80 backdrop-blur-md border-b border-white/5">
-            <h1 class="text-2xl font-black tracking-tighter text-white uppercase font-black-bold">YOURGROWT</h1>
-            <div onclick="showSection('add-funds')" class="bg-blue-500/10 px-4 py-2 rounded-2xl border border-blue-500/20 flex items-center gap-2 cursor-pointer active:scale-95 transition">
-                <span class="text-sm font-bold text-blue-400">₹<span id="user-balance">0.00</span></span>
-                <i class="fas fa-wallet text-blue-400"></i>
+    <div id="app">
+        <header>
+            <div class="header-profile" onclick="App.openProfileModal()">
+                <img id="user-avatar" src="https://i.pravatar.cc/100" alt="Avatar">
+                <div class="header-user-info">
+                    <span class="header-user-name" id="user-display-name">Miner</span>
+                    <span class="header-user-tag" id="user-display-tag">UID: Loading</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="icon-btn" onclick="App.openSupportLink()" title="Help">🎧</button>
             </div>
         </header>
 
-        <main class="p-4 space-y-6">
-            <section id="new-order" class="section">
-                <div class="boost-header mb-6">
-                    <h2 class="text-xl font-black text-white mb-1">Instagram Boost</h2>
-                    <p class="text-[10px] text-slate-400 mb-4">Real engagement delivered fast & safely</p>
-                    <div class="grid grid-cols-3 gap-2">
-                        <div class="bg-white/5 p-2 rounded-xl text-center border border-white/5"><p class="text-blue-400 text-xs font-black">20M+</p><p class="text-[8px] text-slate-500 uppercase">Delivered</p></div>
-                        <div class="bg-white/5 p-2 rounded-xl text-center border border-white/5"><p class="text-blue-400 text-xs font-black">24/7</p><p class="text-[8px] text-slate-500 uppercase">Support</p></div>
-                        <div class="bg-white/5 p-2 rounded-xl text-center border border-white/5"><p class="text-blue-400 text-xs font-black">100%</p><p class="text-[8px] text-slate-500 uppercase">Safe</p></div>
+        <main>
+            <!-- 🏠 HOME SECTION -->
+            <section id="view-home" class="section-view active">
+                <div class="balance-hero">
+                    <div class="balance-label">
+                        <span>Total Portfolio</span>
+                        <span style="color:var(--accent-cyan); font-size:11px;">100 Coins = ₹1</span>
                     </div>
-                </div>
-
-                <div class="flex overflow-x-auto gap-3 mb-6 hide-scroll" id="app-cats">
-                    <button onclick="filterCat('All')" class="flex-shrink-0 bg-blue-600 text-white px-6 py-2 rounded-full font-bold text-xs">All</button>
-                    <button onclick="filterCat('Instagram')" class="flex-shrink-0 bg-card-dark border border-white/5 px-5 py-2 rounded-full font-medium text-xs">Instagram</button>
-                    <button onclick="filterCat('YouTube')" class="flex-shrink-0 bg-card-dark border border-white/5 px-5 py-2 rounded-full font-medium text-xs">YouTube</button>
-                    <button onclick="filterCat('🔥 FLASH DEALS')" class="flex-shrink-0 bg-card-dark border border-white/5 px-5 py-2 rounded-full font-medium text-xs text-rose-500">Flash Deals</button>
-                </div>
-
-                <div id="service-list-container" class="space-y-3 mb-8"></div>
-
-                <div id="order-form-box" class="glass-card p-6 space-y-5 hidden">
-                    <input type="text" id="order-link" placeholder="Paste your link here..." class="w-full outline-none">
-                    <div class="grid grid-cols-2 gap-4">
-                        <input type="number" id="order-qty" value="1000" class="w-full outline-none font-bold" oninput="calculateCost()">
-                        <div class="bg-green-500/10 rounded-2xl flex items-center justify-center border border-green-500/20">
-                            <input type="text" id="order-cost" value="₹0.00" class="bg-transparent border-none text-center font-black text-green-400 w-full" readonly>
+                    <div class="primary-balance">
+                        <span class="coin-val" id="home-coin-balance">0</span>
+                        <span class="coin-symbol">COINS</span>
+                    </div>
+                    <div class="secondary-currencies">
+                        <div class="curr-box">
+                            <div class="curr-title">INR Available</div>
+                            <div class="curr-amount" id="home-inr-balance">₹ 0.00</div>
+                        </div>
+                        <div class="curr-box">
+                            <div class="curr-title">USDT Available</div>
+                            <div class="curr-amount" id="home-usdt-balance">$ 0.00</div>
                         </div>
                     </div>
-                    <button id="place-order-btn" onclick="placeOrder()" class="w-full premium-gradient py-4 rounded-2xl font-black text-white shadow-xl active:scale-95 transition">PLACE ORDER</button>
+                </div>
+
+                <div class="quick-actions">
+                    <div class="quick-action-btn" onclick="App.switchTab('view-tasks')">
+                        <span class="btn-icon">📋</span>
+                        <span class="btn-text">Tasks</span>
+                    </div>
+                    <div class="quick-action-btn" onclick="App.switchTab('view-watch')">
+                        <span class="btn-icon">📺</span>
+                        <span class="btn-text">Watch Ads</span>
+                    </div>
+                    <div class="quick-action-btn" onclick="App.switchTab('view-wallet')">
+                        <span class="btn-icon">💰</span>
+                        <span class="btn-text">Withdraw</span>
+                    </div>
+                    <div class="quick-action-btn" onclick="App.switchTab('view-refer')">
+                        <span class="btn-icon">👥</span>
+                        <span class="btn-text">Invite</span>
+                    </div>
+                </div>
+
+                <!-- Mining Card -->
+                <div class="mining-card">
+                    <div class="mining-header">
+                        <div>
+                            <h3 style="font-size: 15px; font-weight: 800;">Cloud Mining</h3>
+                            <span style="font-size: 11px; color: var(--text-muted);">Session Duration: 1 Hour</span>
+                        </div>
+                        <span class="badge badge-idle" id="mining-status-badge">READY</span>
+                    </div>
+
+                    <div class="mining-dial">
+                        <svg viewBox="0 0 190 190">
+                            <circle class="mining-dial-bg" cx="95" cy="95" r="85"></circle>
+                            <circle class="mining-dial-progress" id="dial-progress-circle" cx="95" cy="95" r="85"></circle>
+                        </svg>
+                        <div class="mining-dial-content">
+                            <span class="dial-icon" id="mining-dial-icon">⛏️</span>
+                            <span class="dial-value" id="mining-timer-display">01:00:00</span>
+                            <span class="dial-sub" id="mining-sub-text">Tap Start</span>
+                        </div>
+                    </div>
+
+                    <div class="mining-stats-row">
+                        <div class="mini-stat">
+                            <div class="mini-stat-label">RATE</div>
+                            <div class="mini-stat-val">+0.15/sec</div>
+                        </div>
+                        <div class="mini-stat">
+                            <div class="mini-stat-label">SESSION REWARD</div>
+                            <div class="mini-stat-val">+540 Coins</div>
+                        </div>
+                        <div class="mini-stat">
+                            <div class="mini-stat-label">REQUIRED ADS</div>
+                            <div class="mini-stat-val" id="mining-ads-status">0/5</div>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" id="btn-mine-action" onclick="App.handleMiningAction()">
+                        <span>🪙</span> <span id="btn-mine-label">Watch Ads to Unlock Mining (0/5)</span>
+                    </button>
                 </div>
             </section>
 
-            <section id="add-funds" class="section hidden">
-                <div class="glass-card p-8 text-center">
-                    <div id="deposit-step-1">
-                        <h3 class="font-black mb-8 text-blue-400 uppercase text-xl">Recharge Wallet</h3>
-                        <div class="grid grid-cols-2 gap-4 mb-8">
-                            <button onclick="selectAmount(40)" class="p-4 rounded-2xl border-2 border-white/5 font-bold text-slate-300">₹40</button>
-                            <button onclick="selectAmount(100)" class="p-4 rounded-2xl border-2 border-white/5 font-bold text-slate-300">₹100</button>
+            <!-- 📋 TASKS SECTION -->
+            <section id="view-tasks" class="section-view">
+                <div>
+                    <h2 style="font-size:18px; font-weight:800;">Task Center</h2>
+                    <p style="font-size:12px; color:var(--text-secondary); margin-top:2px;">Complete partner tasks to earn instant coins.</p>
+                </div>
+
+                <div class="filter-scroller" id="task-category-chips">
+                    <div class="chip-tab active" onclick="App.filterTasks('all', this)">🔥 All</div>
+                    <div class="chip-tab" onclick="App.filterTasks('daily', this)">📅 Daily</div>
+                    <div class="chip-tab" onclick="App.filterTasks('social', this)">🎯 Social</div>
+                    <div class="chip-tab" onclick="App.filterTasks('app', this)">📱 App Installs</div>
+                </div>
+
+                <div id="tasks-container" style="display:flex; flex-direction:column; gap:12px;"></div>
+            </section>
+
+            <!-- 📺 WATCH & EARN -->
+            <section id="view-watch" class="section-view">
+                <div>
+                    <h2 style="font-size:18px; font-weight:800;">Watch & Earn</h2>
+                    <p style="font-size:12px; color:var(--text-secondary); margin-top:2px;">View native HD ads & claim real coin rewards.</p>
+                </div>
+
+                <div class="ad-network-card">
+                    <div class="ad-card-top">
+                        <div>
+                            <div style="font-size: 15px; font-weight: 700;">Native Android Video Ad</div>
+                            <div style="font-size: 12px; color: var(--text-secondary);">Direct High-Paying Sponsor Ad</div>
                         </div>
-                        <input type="number" id="pay-amt" placeholder="Custom Amount" class="w-full mb-8 text-center font-bold">
-                        <button onclick="goToPayment()" class="w-full premium-gradient py-5 rounded-2xl font-black text-white shadow-xl">CONTINUE TO PAY</button>
+                        <span class="badge badge-active">+50 Coins</span>
                     </div>
-                    <div id="deposit-step-2" class="hidden">
-                        <div class="bg-white p-4 rounded-[2rem] inline-block mb-6 shadow-inner"><img id="qr-img" src="" class="w-56 h-56"></div>
-                        <p class="text-sm font-bold text-slate-400 mb-2">UPI ID: <span id="upi-id" class="text-blue-400">arifxz@axl</span></p>
-                        <div class="bg-rose-500/10 border border-rose-500/20 p-5 rounded-3xl mb-8">
-                            <p class="text-rose-600 text-[10px] font-black uppercase mb-2">Complete payment within</p>
-                            <p class="text-3xl font-black text-white" id="payment-timer">02:00</p>
+                    <p style="font-size: 12px; color: var(--text-secondary);">Watch a complete video ad without skipping to claim coins.</p>
+                    <button class="btn-primary btn-gold" onclick="App.watchNativeRewardedAd()">
+                        🎬 Watch Native Ad (+50 Coins)
+                    </button>
+                </div>
+
+                <div class="ad-network-card">
+                    <div class="ad-card-top">
+                        <div>
+                            <div style="font-size: 15px; font-weight: 700;">Interactive Web Sponsor</div>
+                            <div style="font-size: 12px; color: var(--text-secondary);">Fast Bonus Sponsor Task</div>
                         </div>
-                        <div class="space-y-4">
-                            <input type="text" id="utr-input" placeholder="Enter 12 Digit UTR Number" class="w-full text-center font-bold">
-                            <button onclick="submitDeposit()" class="w-full bg-green-600 py-5 rounded-2xl font-black text-white shadow-lg">VERIFY DEPOSIT</button>
-                            <button onclick="resetDeposit()" class="w-full text-slate-500 text-[10px] font-bold uppercase">Cancel Payment</button>
-                        </div>
+                        <span class="badge badge-active">+30 Coins</span>
                     </div>
+                    <p style="font-size: 12px; color: var(--text-secondary);">Check promotional offers and earn instant bonus.</p>
+                    <button class="btn-primary" onclick="App.watchWebAd()">
+                        ⚡ Watch Sponsor Offer (+30 Coins)
+                    </button>
                 </div>
             </section>
 
-            <section id="orders" class="section hidden text-center py-20">
-                <div class="inline-block p-6 bg-blue-500/10 rounded-full mb-4 text-blue-400"><i class="fas fa-box-open text-5xl"></i></div>
-                <p class="font-bold text-slate-500">No orders found yet</p>
+            <!-- 💰 WALLET & EXCHANGES -->
+            <section id="view-wallet" class="section-view">
+                <div>
+                    <h2 style="font-size:18px; font-weight:800;">Treasury & Cashout</h2>
+                    <p style="font-size:12px; color:var(--text-secondary); margin-top:2px;">Exchange Coins to INR or USDT and request payout.</p>
+                </div>
+
+                <div class="wallet-grid">
+                    <div class="wallet-card-cell">
+                        <div class="label">COINS</div>
+                        <div class="val" id="wallet-coins-val" style="color:var(--accent-gold);">0</div>
+                    </div>
+                    <div class="wallet-card-cell">
+                        <div class="label">INR</div>
+                        <div class="val" id="wallet-inr-val" style="color:var(--accent-cyan);">₹0.00</div>
+                    </div>
+                    <div class="wallet-card-cell">
+                        <div class="label">USDT</div>
+                        <div class="val" id="wallet-usdt-val" style="color:var(--accent-green);">$0.00</div>
+                    </div>
+                </div>
+
+                <!-- Swap Card -->
+                <div class="swap-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <h4 style="font-size:14px; font-weight:700;">💱 Currency Swap</h4>
+                        <span style="font-size:11px; color:var(--accent-cyan);">Requires 1 Ad</span>
+                    </div>
+
+                    <div class="swap-input-group">
+                        <input type="number" id="swap-coins-input" placeholder="Coins to swap" oninput="App.calculateSwapPreview()">
+                        <span style="font-size:13px; font-weight:700; color:var(--text-secondary);">COINS</span>
+                    </div>
+
+                    <div style="text-align:center; font-size:16px;">⬇️</div>
+
+                    <div class="swap-input-group">
+                        <input type="text" id="swap-output-preview" placeholder="0.00" readonly>
+                        <select id="swap-target-currency" onchange="App.calculateSwapPreview()">
+                            <option value="INR">INR (₹)</option>
+                            <option value="USDT">USDT ($)</option>
+                        </select>
+                    </div>
+
+                    <button class="btn-primary" onclick="App.triggerCoinExchange()">
+                        💱 Watch Ad & Swap Currency
+                    </button>
+                </div>
+
+                <!-- Payout Options -->
+                <div style="display:flex; flex-direction:column; gap:10px; margin-top:4px;">
+                    <button class="btn-primary btn-outline" style="justify-content:space-between;" onclick="App.openWithdrawModal('UPI')">
+                        <span>🇮🇳 UPI Bank Cashout (PhonePe/GPay)</span>
+                        <span style="font-size:12px; color:var(--text-muted);">From ₹ Balance →</span>
+                    </button>
+                    <button class="btn-primary btn-outline" style="justify-content:space-between;" onclick="App.openWithdrawModal('CRYPTO')">
+                        <span>₿ USDT Payout (TRC20 / BEP20)</span>
+                        <span style="font-size:12px; color:var(--text-muted);">From $ Balance →</span>
+                    </button>
+                </div>
+
+                <div>
+                    <h4 style="font-size:14px; font-weight:700; margin: 10px 0;">Recent Transactions</h4>
+                    <div id="tx-history-container" style="display:flex; flex-direction:column; gap:8px;"></div>
+                </div>
             </section>
 
-            <section id="account" class="section hidden text-center">
-                <div class="glass-card p-10">
-                    <div class="w-24 h-24 premium-gradient rounded-full mx-auto flex items-center justify-center text-white text-4xl mb-6 shadow-2xl"><i class="fas fa-user"></i></div>
-                    <p id="profile-name" class="font-black text-2xl text-white mb-1">User Name</p>
-                    <p id="profile-email" class="text-slate-500 text-sm mb-10">email@example.com</p>
-                    <button onclick="handleLogout()" class="w-full bg-rose-500/10 text-rose-600 py-5 rounded-2xl font-black border border-rose-500/20 active:scale-95 transition">LOGOUT ACCOUNT</button>
+            <!-- 👥 REFERRAL -->
+            <section id="view-refer" class="section-view">
+                <div>
+                    <h2 style="font-size:18px; font-weight:800;">Invite & Earn</h2>
+                    <p style="font-size:12px; color:var(--text-secondary); margin-top:2px;">Share your code. Earn 10% lifetime coin commissions.</p>
+                </div>
+
+                <div class="balance-hero" style="border-color: rgba(255, 210, 0, 0.3);">
+                    <div class="balance-label">
+                        <span>Your Referral Code</span>
+                        <span id="ref-tier-badge">Tier 1 Active</span>
+                    </div>
+                    <div style="background:rgba(0,0,0,0.5); border:1px solid var(--border); border-radius:12px; padding:12px; font-size:18px; font-weight:800; color:var(--accent-gold); letter-spacing:2px; text-align:center; margin:10px 0;" id="user-ref-code-display">
+                        MINE123
+                    </div>
+                    <button class="btn-primary btn-gold" onclick="App.copyReferralCode()">
+                        📋 Copy Invite Code
+                    </button>
+                </div>
+
+                <div class="wallet-grid">
+                    <div class="wallet-card-cell">
+                        <div class="label">INVITED</div>
+                        <div class="val" id="ref-invited-count">0</div>
+                    </div>
+                    <div class="wallet-card-cell">
+                        <div class="label">ACTIVE</div>
+                        <div class="val" id="ref-active-count">0</div>
+                    </div>
+                    <div class="wallet-card-cell">
+                        <div class="label">COMMISSION</div>
+                        <div class="val" id="ref-commission-val" style="color:var(--accent-gold);">0 C</div>
+                    </div>
                 </div>
             </section>
         </main>
 
-        <nav class="fixed bottom-6 left-6 right-6 glass-card py-4 px-8 flex justify-around items-center z-50 border border-white/10 shadow-2xl">
-            <button onclick="showSection('orders', this)" class="nav-btn text-slate-400 transition"><i class="fas fa-list-ul text-xl"></i></button>
-            <button onclick="showSection('new-order', this)" class="nav-btn nav-active transition text-blue-400"><i class="fas fa-home text-2xl"></i></button>
-            <button onclick="showSection('account', this)" class="nav-btn text-slate-400 transition"><i class="fas fa-user text-xl"></i></button>
+        <nav class="bottom-nav">
+            <button class="nav-tab active" onclick="App.switchTab('view-home')">
+                <span class="tab-icon">🏠</span>
+                <span class="tab-name">Home</span>
+            </button>
+            <button class="nav-tab" onclick="App.switchTab('view-tasks')">
+                <span class="tab-icon">📋</span>
+                <span class="tab-name">Tasks</span>
+            </button>
+            <button class="nav-tab" onclick="App.switchTab('view-watch')">
+                <span class="tab-icon">📺</span>
+                <span class="tab-name">Watch</span>
+            </button>
+            <button class="nav-tab" onclick="App.switchTab('view-wallet')">
+                <span class="tab-icon">💰</span>
+                <span class="tab-name">Wallet</span>
+            </button>
+            <button class="nav-tab" onclick="App.switchTab('view-refer')">
+                <span class="tab-icon">👥</span>
+                <span class="tab-name">Refer</span>
+            </button>
         </nav>
     </div>
 
+    <!-- Payout Modal -->
+    <div class="modal-backdrop" id="modal-withdraw">
+        <div class="modal-sheet">
+            <div class="sheet-handle"></div>
+            <h3 style="font-size:18px; font-weight:800; margin-bottom:6px;" id="modal-withdraw-title">Request Cashout</h3>
+            <p style="font-size:13px; color:var(--text-secondary); margin-bottom:16px;">Minimum limits apply. Processed safely via automated payout queue.</p>
+
+            <div id="crypto-network-group" style="display:none; margin-bottom:14px;">
+                <label class="form-label">SELECT CRYPTO NETWORK</label>
+                <select class="form-input" id="withdraw-crypto-network" onchange="App.onNetworkChange()">
+                    <option value="TRC20">USDT - TRC20 (Tron Network - Low Fee)</option>
+                    <option value="BEP20">USDT - BEP20 (BNB Smart Chain)</option>
+                </select>
+            </div>
+
+            <div class="warning-callout" id="withdraw-network-warning" style="display:none;">
+                ⚠️ <strong>CRITICAL WARNING:</strong> Verify your wallet network carefully. Sending funds to an incorrect network address leads to permanent coin loss.
+            </div>
+
+            <label class="form-label" id="withdraw-dest-label">PAYMENT DESTINATION</label>
+            <input type="text" class="form-input" id="withdraw-dest-input" placeholder="Enter UPI ID or Wallet">
+
+            <label class="form-label">CASHOUT AMOUNT</label>
+            <input type="number" class="form-input" id="withdraw-amount-input" placeholder="0.00">
+
+            <button class="btn-primary" onclick="App.submitPayoutRequest()">
+                💸 Confirm Withdrawal
+            </button>
+            <button class="btn-primary btn-outline" style="margin-top:10px;" onclick="App.closeModals()">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Firebase SDK (Modular v9) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-        import { getDatabase, ref, onValue, set, get, update, push } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+        import { 
+            getDatabase, ref, set, get, update, push, onValue, runTransaction, query, orderByChild, equalTo 
+        } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyDzmYzLlnxHZQaNkRUc_bz6sMV5toT9nxc",
-            authDomain: "mining-bot-2f220.firebaseapp.com",
-            databaseURL: "https://mining-bot-2f220-default-rtdb.firebaseio.com",
-            projectId: "mining-bot-2f220",
-            storageBucket: "mining-bot-2f220.firebasestorage.app",
-            messagingSenderId: "343763715927",
-            appId: "1:343763715927:web:f1f1840fe029488ddfe012",
-            measurementId: "G-F6KPRL7QSL"
+            apiKey: "AIzaSyCcgl31JqffVd8bW8G23UurFhxH8IFlEfM",
+            authDomain: "mining-bot-276d0.firebaseapp.com",
+            projectId: "mining-bot-276d0",
+            storageBucket: "mining-bot-276d0.firebasestorage.app",
+            messagingSenderId: "263688973305",
+            appId: "1:263688973305:web:bf3eab880a03dde0ec2b28",
+            measurementId: "G-2FWW2SVSLR"
         };
 
         const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getDatabase(app);
+        const database = getDatabase(app);
 
-        window.isLoginMode = false;
-        window.adminUpi = "arifxz@axl";
-        window.userBalance = 0;
-        window.selectedService = null;
-        let paymentTimerInterval;
-
-        // --- MANUAL SERVICES (RESTORED) ---
-        const manualServices = [
-            { id:101, cat:"🔥 FLASH DEALS", name: "Instagram 10k Followers [Special]", price: 99, baseQty: 10000 },
-            { id:102, cat:"🔥 FLASH DEALS", name: "1k Instagram ID Reports [Elite]", price: 119, baseQty: 1000 },
-            { id:1, cat:"Instagram", name: "1000 Insta Reel Likes", price: 20, baseQty: 1000 },
-            { id:2, cat:"Instagram", name: "100 Automatic Comments", price: 25, baseQty: 100 },
-            { id:3, cat:"Instagram", name: "100 Manual Custom Comments", price: 35, baseQty: 100 },
-            { id:4, cat:"Instagram", name: "100k Insta Reel Views [Flash]", price: 29, baseQty: 100000 },
-            { id:5, cat:"Instagram", name: "3000 Real Followers [Safe]", price: 49, baseQty: 3000 },
-            { id:7, cat:"YouTube", name: "1000 YouTube Subscribers", price: 450, baseQty: 1000 },
-            { id:8, cat:"YouTube", name: "4000H YouTube Watch Time", price: 800, baseQty: 4000 }
-        ];
-
-        window.toggleAuthMode = () => {
-            window.isLoginMode = !window.isLoginMode;
-            const title = document.getElementById('auth-title');
-            const btn = document.getElementById('email-auth-btn');
-            if(title) title.innerText = window.isLoginMode ? "Login to Account" : "Create Account";
-            if(btn) btn.innerText = window.isLoginMode ? "LOGIN" : "GET STARTED";
-            const cp = document.getElementById('auth-confirm-pass');
-            if(cp) cp.style.display = window.isLoginMode ? "none" : "block";
+        // State Machine
+        const State = {
+            userId: localStorage.getItem('mf_user_id') || null,
+            userName: localStorage.getItem('mf_user_name') || 'Miner',
+            coins: 0,
+            inr: 0,
+            usdt: 0,
+            miningEndTime: 0,
+            miningAdsWatched: 0,
+            rates: { coinToInr: 100, coinToUsdt: 9000 },
+            currentWithdrawType: 'UPI',
+            lastAdWatchTime: 0
         };
 
-        document.getElementById('email-auth-btn').addEventListener('click', async () => {
-            const email = document.getElementById('auth-email').value.trim();
-            const pass = document.getElementById('auth-pass').value;
-            if (!email || !pass) return alert("Fill all fields");
-            try {
-                if (window.isLoginMode) await signInWithEmailAndPassword(auth, email, pass);
-                else {
-                    const res = await createUserWithEmailAndPassword(auth, email, pass);
-                    await set(ref(db, `users/${res.user.uid}`), { name: email.split('@')[0], email: email, balance: 0.00 });
+        window.App = {
+            init: function() {
+                if (!State.userId) {
+                    document.getElementById('modal-auth').classList.add('open');
+                } else {
+                    this.attachUserSession();
                 }
-            } catch (e) { alert("Auth Error: " + e.message); }
-        });
+                this.startMiningClock();
+            },
 
-        onAuthStateChanged(auth, user => {
-            if(user) {
-                document.getElementById('auth-screen').classList.add('hidden');
-                document.getElementById('app-screen').classList.remove('hidden');
-                const dn = document.getElementById('display-name');
-                const pn = document.getElementById('profile-name');
-                const pe = document.getElementById('profile-email');
-                if(dn) dn.innerText = user.email.split('@')[0];
-                if(pn) pn.innerText = user.email.split('@')[0];
-                if(pe) pe.innerText = user.email;
-                loadDashboard(user.uid);
+            handleAuth: async function() {
+                const username = document.getElementById('auth-username').value.trim();
+                const pin = document.getElementById('auth-password').value.trim();
+                const refCode = document.getElementById('auth-ref-code').value.trim();
+
+                if (username.length < 3 || pin.length < 4) {
+                    this.toast("Enter a valid username/number & 4-digit PIN", "error");
+                    return;
+                }
+
+                // Clean alphanumeric user key
+                const userKey = username.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase();
+                const userSnapshot = await get(ref(database, `users/${userKey}`));
+
+                if (userSnapshot.exists()) {
+                    const uData = userSnapshot.val();
+                    if (uData.pin && uData.pin !== pin) {
+                        this.toast("Incorrect PIN for this account", "error");
+                        return;
+                    }
+                } else {
+                    // Register new profile
+                    await set(ref(database, `users/${userKey}`), {
+                        userId: userKey,
+                        userName: username,
+                        pin: pin,
+                        coins: 100, // Welcome Bonus
+                        inr_balance: 0,
+                        usdt_balance: 0,
+                        miningEndTime: 0,
+                        miningAdsWatched: 0,
+                        referredBy: refCode || 'NONE',
+                        createdDate: Date.now()
+                    });
+                }
+
+                localStorage.setItem('mf_user_id', userKey);
+                localStorage.setItem('mf_user_name', username);
+                State.userId = userKey;
+                State.userName = username;
+
+                document.getElementById('modal-auth').classList.remove('open');
+                this.attachUserSession();
+                this.toast("Welcome to Mining Father!", "success");
+            },
+
+            attachUserSession: function() {
+                document.getElementById('user-display-name').innerText = State.userName;
+                document.getElementById('user-display-tag').innerText = `ID: ${State.userId}`;
+                document.getElementById('user-ref-code-display').innerText = State.userId.toUpperCase();
+
+                const userRef = ref(database, `users/${State.userId}`);
+                onValue(userRef, (snapshot) => {
+                    const data = snapshot.val();
+                    if (data) {
+                        State.coins = parseFloat(data.coins) || 0;
+                        State.inr = parseFloat(data.inr_balance) || 0;
+                        State.usdt = parseFloat(data.usdt_balance) || 0;
+                        State.miningEndTime = parseInt(data.miningEndTime) || 0;
+                        State.miningAdsWatched = parseInt(data.miningAdsWatched) || 0;
+
+                        this.renderBalances();
+                        this.updateMiningUI();
+                    }
+                });
+
+                this.listenToTasks();
+                this.listenToHistory();
+            },
+
+            renderBalances: function() {
+                document.getElementById('home-coin-balance').innerText = Math.floor(State.coins).toLocaleString();
+                document.getElementById('wallet-coins-val').innerText = Math.floor(State.coins).toLocaleString();
+                document.getElementById('home-inr-balance').innerText = `₹ ${State.inr.toFixed(2)}`;
+                document.getElementById('wallet-inr-val').innerText = `₹ ${State.inr.toFixed(2)}`;
+                document.getElementById('home-usdt-balance').innerText = `$ ${State.usdt.toFixed(2)}`;
+                document.getElementById('wallet-usdt-val').innerText = `$ ${State.usdt.toFixed(2)}`;
+            },
+
+            // Native Android Ad Trigger with Bridge
+            watchNativeRewardedAd: function() {
+                const now = Date.now();
+                if (now - State.lastAdWatchTime < 15000) {
+                    this.toast("Please wait 15 seconds between ads", "info");
+                    return;
+                }
+
+                // Check if running inside Android WebView with Native Bridge
+                if (window.AndroidBridge && typeof window.AndroidBridge.showRewardedAd === 'function') {
+                    window.AndroidBridge.showRewardedAd();
+                } else {
+                    // Browser Fallback (Adsgram / Monetag)
+                    if (window.Adsgram) {
+                        window.Adsgram.init({ blockId: "19245" }).show()
+                            .then(() => window.onNativeAdRewarded())
+                            .catch(() => this.toast("Ad cancelled or unavailable", "error"));
+                    } else {
+                        // Testing mock
+                        setTimeout(() => window.onNativeAdRewarded(), 1500);
+                    }
+                }
+            },
+
+            watchWebAd: function() {
+                if (typeof window.show_9969043 === 'function') {
+                    try { window.show_9969043(); } catch(e){}
+                }
+                this.creditCoins(30, "Sponsor Task Bonus");
+            },
+
+            // Anti-Fraud Atomic Crediting
+            creditCoins: async function(amount, reason) {
+                State.lastAdWatchTime = Date.now();
+                await runTransaction(ref(database, `users/${State.userId}/coins`), (curr) => {
+                    return (parseFloat(curr) || 0) + amount;
+                });
+                push(ref(database, `users/${State.userId}/coin_history`), {
+                    amount: amount,
+                    reason: reason,
+                    timestamp: Date.now()
+                });
+                this.toast(`+${amount} Coins Credited!`, "success");
+            },
+
+            // Mining Mechanism
+            handleMiningAction: async function() {
+                const now = Date.now();
+                if (State.miningEndTime > now) {
+                    this.toast("Mining session is actively running", "info");
+                    return;
+                }
+
+                const requiredAds = 5;
+                if (State.miningAdsWatched < requiredAds) {
+                    this.watchNativeRewardedAd();
+                    return;
+                }
+
+                // Start 1-hour session
+                const oneHour = 60 * 60 * 1000;
+                await update(ref(database, `users/${State.userId}`), {
+                    miningStartTime: now,
+                    miningEndTime: now + oneHour,
+                    miningAdsWatched: 0
+                });
+                this.toast("Mining session started! Coins will accumulate.", "success");
+            },
+
+            startMiningClock: function() {
+                setInterval(() => {
+                    const now = Date.now();
+                    const timerText = document.getElementById('mining-timer-display');
+                    const badge = document.getElementById('mining-status-badge');
+                    const circle = document.getElementById('dial-progress-circle');
+
+                    if (State.miningEndTime > now) {
+                        const remaining = State.miningEndTime - now;
+                        const mins = Math.floor(remaining / 60000);
+                        const secs = Math.floor((remaining % 60000) / 1000);
+                        timerText.innerText = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+                        badge.className = "badge badge-active";
+                        badge.innerText = "ACTIVE";
+
+                        const progress = 1 - (remaining / 3600000);
+                        circle.style.strokeDashoffset = 534 - (534 * progress);
+
+                        // Accumulate 0.15 coins every second atomically
+                        if (Math.floor(remaining / 1000) % 2 === 0) {
+                            runTransaction(ref(database, `users/${State.userId}/coins`), (curr) => {
+                                return (parseFloat(curr) || 0) + 0.3;
+                            });
+                        }
+                    } else {
+                        timerText.innerText = "01:00:00";
+                        badge.className = "badge badge-idle";
+                        badge.innerText = "READY";
+                        circle.style.strokeDashoffset = 534;
+                    }
+                }, 1000);
+            },
+
+            updateMiningUI: function() {
+                const now = Date.now();
+                const btnLabel = document.getElementById('btn-mine-label');
+                const reqAds = 5;
+                document.getElementById('mining-ads-status').innerText = `${State.miningAdsWatched}/${reqAds}`;
+
+                if (State.miningEndTime > now) {
+                    btnLabel.innerText = "Mining In Progress...";
+                    document.getElementById('btn-mine-action').disabled = true;
+                } else if (State.miningAdsWatched < reqAds) {
+                    btnLabel.innerText = `Watch Ad to Unlock (${State.miningAdsWatched}/${reqAds})`;
+                    document.getElementById('btn-mine-action').disabled = false;
+                } else {
+                    btnLabel.innerText = "Start 1-Hour Mining";
+                    document.getElementById('btn-mine-action').disabled = false;
+                }
+            },
+
+            // Currency Swap
+            calculateSwapPreview: function() {
+                const amount = parseFloat(document.getElementById('swap-coins-input').value) || 0;
+                const target = document.getElementById('swap-target-currency').value;
+                const out = document.getElementById('swap-output-preview');
+
+                if (target === 'INR') out.value = `₹ ${(amount / State.rates.coinToInr).toFixed(2)}`;
+                else out.value = `$ ${(amount / State.rates.coinToUsdt).toFixed(3)}`;
+            },
+
+            triggerCoinExchange: async function() {
+                const coinsToSwap = parseFloat(document.getElementById('swap-coins-input').value) || 0;
+                const target = document.getElementById('swap-target-currency').value;
+
+                if (coinsToSwap < 100) {
+                    this.toast("Minimum swap is 100 Coins", "error");
+                    return;
+                }
+                if (coinsToSwap > State.coins) {
+                    this.toast("Insufficient coin balance", "error");
+                    return;
+                }
+
+                // Safe transaction deduction
+                await runTransaction(ref(database, `users/${State.userId}`), (u) => {
+                    if (!u || u.coins < coinsToSwap) return;
+                    u.coins -= coinsToSwap;
+                    if (target === 'INR') u.inr_balance = (parseFloat(u.inr_balance) || 0) + (coinsToSwap / State.rates.coinToInr);
+                    else u.usdt_balance = (parseFloat(u.usdt_balance) || 0) + (coinsToSwap / State.rates.coinToUsdt);
+                    return u;
+                });
+
+                document.getElementById('swap-coins-input').value = '';
+                document.getElementById('swap-output-preview').value = '';
+                this.toast("Currency swapped successfully!", "success");
+            },
+
+            // Withdrawals
+            openWithdrawModal: function(type) {
+                State.currentWithdrawType = type;
+                const modal = document.getElementById('modal-withdraw');
+                const title = document.getElementById('modal-withdraw-title');
+                const destLabel = document.getElementById('withdraw-dest-label');
+                const destInput = document.getElementById('withdraw-dest-input');
+                const cryptoGroup = document.getElementById('crypto-network-group');
+                const warning = document.getElementById('withdraw-network-warning');
+
+                destInput.value = '';
+                document.getElementById('withdraw-amount-input').value = '';
+
+                if (type === 'UPI') {
+                    title.innerText = "🇮🇳 UPI Bank Cashout";
+                    destLabel.innerText = "ENTER YOUR UPI ID";
+                    destInput.placeholder = "username@okhdfcbank";
+                    cryptoGroup.style.display = 'none';
+                    warning.style.display = 'none';
+                } else {
+                    title.innerText = "₿ Crypto USDT Cashout";
+                    destLabel.innerText = "USDT WALLET ADDRESS";
+                    destInput.placeholder = "T... (Tron or BSC Address)";
+                    cryptoGroup.style.display = 'block';
+                    warning.style.display = 'block';
+                }
+                modal.classList.add('open');
+            },
+
+            submitPayoutRequest: async function() {
+                const dest = document.getElementById('withdraw-dest-input').value.trim();
+                const amount = parseFloat(document.getElementById('withdraw-amount-input').value) || 0;
+                const type = State.currentWithdrawType;
+
+                if (!dest || amount <= 0) {
+                    this.toast("Enter valid details & amount", "error");
+                    return;
+                }
+
+                if (type === 'UPI' && (amount > State.inr || amount < 50)) {
+                    this.toast("Min UPI withdrawal is ₹50", "error");
+                    return;
+                }
+                if (type === 'CRYPTO' && (amount > State.usdt || amount < 5)) {
+                    this.toast("Min Crypto withdrawal is $5 USDT", "error");
+                    return;
+                }
+
+                // Atomic deduction
+                await runTransaction(ref(database, `users/${State.userId}`), (u) => {
+                    if (!u) return;
+                    if (type === 'UPI') u.inr_balance -= amount;
+                    else u.usdt_balance -= amount;
+                    return u;
+                });
+
+                await push(ref(database, 'withdrawals'), {
+                    userId: State.userId,
+                    amount: amount,
+                    type: type,
+                    destination: dest,
+                    network: type === 'CRYPTO' ? document.getElementById('withdraw-crypto-network').value : 'UPI',
+                    status: 'Pending',
+                    timestamp: Date.now()
+                });
+
+                this.closeModals();
+                this.toast("Withdrawal queued! Payout dispatched within 24h.", "success");
+            },
+
+            listenToHistory: function() {
+                const q = query(ref(database, 'withdrawals'), orderByChild('userId'), equalTo(State.userId));
+                onValue(q, (snapshot) => {
+                    const c = document.getElementById('tx-history-container');
+                    c.innerHTML = '';
+                    const data = snapshot.val();
+                    if (!data) {
+                        c.innerHTML = `<p style="font-size:12px; color:var(--text-muted); text-align:center;">No recent withdrawals</p>`;
+                        return;
+                    }
+                    Object.values(data).sort((a,b) => b.timestamp - a.timestamp).forEach(item => {
+                        const el = document.createElement('div');
+                        el.className = 'history-item';
+                        el.innerHTML = `
+                            <div>
+                                <div style="font-size:13px; font-weight:700;">${item.type} Cashout</div>
+                                <div style="font-size:11px; color:var(--text-muted);">${new Date(item.timestamp).toLocaleDateString()}</div>
+                            </div>
+                            <div style="text-align:right;">
+                                <div style="font-size:13px; font-weight:800;">${item.type === 'UPI' ? '₹' : '$'}${item.amount}</div>
+                                <div style="font-size:11px; color:var(--accent-gold); font-weight:700;">${item.status}</div>
+                            </div>
+                        `;
+                        c.appendChild(el);
+                    });
+                });
+            },
+
+            listenToTasks: function() {
+                onValue(ref(database, 'tasks'), (snap) => {
+                    const c = document.getElementById('tasks-container');
+                    c.innerHTML = '';
+                    const tasks = snap.val();
+                    if (!tasks) {
+                        c.innerHTML = `<p style="font-size:12px; color:var(--text-muted); text-align:center;">No new tasks today.</p>`;
+                        return;
+                    }
+                    Object.keys(tasks).forEach(id => {
+                        const t = tasks[id];
+                        const card = document.createElement('div');
+                        card.className = 'task-card';
+                        card.innerHTML = `
+                            <div class="task-card-top">
+                                <img class="task-icon" src="${t.logoUrl || 'https://via.placeholder.com/44'}">
+                                <div class="task-info">
+                                    <div class="task-name">${t.name}</div>
+                                    <div class="task-meta">
+                                        <span style="color:var(--accent-gold); font-weight:700;">+${t.reward} Coins</span>
+                                        <span style="color:var(--text-muted);">~2 mins</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn-primary" onclick="window.open('${t.link || '#'}', '_blank')">Complete Task</button>
+                        `;
+                        c.appendChild(card);
+                    });
+                });
+            },
+
+            switchTab: function(viewId) {
+                document.querySelectorAll('.section-view').forEach(v => v.classList.remove('active'));
+                document.getElementById(viewId)?.classList.add('active');
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                const idx = ['view-home', 'view-tasks', 'view-watch', 'view-wallet', 'view-refer'].indexOf(viewId);
+                if (idx >= 0) document.querySelectorAll('.bottom-nav .nav-tab')[idx].classList.add('active');
+            },
+
+            copyReferralCode: function() {
+                navigator.clipboard.writeText(State.userId.toUpperCase());
+                this.toast("Invite code copied to clipboard!", "success");
+            },
+
+            openProfileModal: function() {
+                this.toast(`Signed in as: ${State.userName}`, "info");
+            },
+
+            openSupportLink: function() {
+                window.open("https://t.me/MiningFatherhelp", "_blank");
+            },
+
+            closeModals: function() {
+                document.querySelectorAll('.modal-backdrop').forEach(m => m.classList.remove('open'));
+            },
+
+            toast: function(msg, type = 'info') {
+                const c = document.getElementById('toast-container');
+                const t = document.createElement('div');
+                t.className = 'toast';
+                t.innerHTML = `<span>${type === 'success' ? '✅' : (type === 'error' ? '❌' : 'ℹ️')}</span> <span>${msg}</span>`;
+                c.appendChild(t);
+                setTimeout(() => t.remove(), 3200);
+            }
+        };
+
+        // Bridge Callback triggered strictly by Native Android Studio Code
+        window.onNativeAdRewarded = function() {
+            // Check if it was for mining ad or general ad
+            if (State.miningEndTime <= Date.now() && State.miningAdsWatched < 5) {
+                runTransaction(ref(database, `users/${State.userId}/miningAdsWatched`), (curr) => {
+                    return (parseInt(curr) || 0) + 1;
+                });
+                App.toast("Ad Completed! Step added toward mining session.", "success");
             } else {
-                document.getElementById('auth-screen').classList.remove('hidden');
-                document.getElementById('app-screen').classList.add('hidden');
-            }
-        });
-
-        function renderServiceCards(category) {
-            const container = document.getElementById('service-list-container');
-            if(!container) return;
-            container.innerHTML = "";
-            const filtered = category === 'All' ? manualServices : manualServices.filter(s => s.cat.includes(category));
-            
-            filtered.forEach(s => {
-                let iconClass = "fas fa-bolt";
-                let bgClass = "bg-blue-500/10";
-                if(s.cat.includes('Instagram')) { iconClass = "fab fa-instagram"; bgClass = "bg-insta"; }
-                else if(s.cat.includes('YouTube')) { iconClass = "fab fa-youtube"; bgClass = "bg-yt"; }
-                else if(s.cat.includes('FLASH')) { iconClass = "fas fa-fire"; bgClass = "bg-flash"; }
-
-                const card = document.createElement('div');
-                card.className = "service-card";
-                card.innerHTML = `
-                    <div class="icon-box ${bgClass}"><i class="${iconClass}"></i></div>
-                    <div class="flex-1">
-                        <h4 class="text-sm font-bold text-white">${s.name}</h4>
-                        <p class="text-[9px] text-slate-500 uppercase font-bold">${s.cat}</p>
-                    </div>
-                    <div class="price-tag">₹${s.price}</div>`;
-                card.onclick = () => selectService(s, card);
-                container.appendChild(card);
-            });
-        }
-
-        function selectService(service, element) {
-            window.selectedService = service;
-            document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
-            element.classList.add('selected');
-            const form = document.getElementById('order-form-box');
-            if(form) form.classList.remove('hidden');
-            calculateCost();
-        }
-
-        function loadDashboard(uid) {
-            renderServiceCards('All');
-            onValue(ref(db, `users/${uid}/balance`), snap => {
-                window.userBalance = snap.val() || 0;
-                const balEl = document.getElementById('user-balance');
-                if(balEl) balEl.innerText = window.userBalance.toFixed(2);
-            });
-            onValue(ref(db, 'settings/payment'), snap => {
-                if(snap.exists()) {
-                    window.adminUpi = snap.val().upi;
-                    const upiEl = document.getElementById('upi-id');
-                    if(upiEl) upiEl.innerText = window.adminUpi;
-                }
-            });
-        }
-
-        window.calculateCost = () => {
-            const qty = document.getElementById('order-qty').value;
-            if(window.selectedService) {
-                const total = (window.selectedService.price / window.selectedService.baseQty) * qty;
-                const costEl = document.getElementById('order-cost');
-                if(costEl) costEl.value = "₹" + total.toFixed(2);
+                App.creditCoins(50, "Native Android Video Ad");
             }
         };
 
-        window.placeOrder = async () => {
-            if(!window.selectedService) return alert("Select a service");
-            const qty = parseInt(document.getElementById('order-qty').value);
-            const link = document.getElementById('order-link').value;
-            const s = window.selectedService;
-            if(!link) return alert("Enter link");
-            const totalCost = (s.price / s.baseQty) * qty;
-            if(window.userBalance < totalCost) return alert("❌ Insufficient Balance!");
-
-            try {
-                await update(ref(db, `users/${auth.currentUser.uid}`), { balance: window.userBalance - totalCost });
-                await set(push(ref(db, 'orders')), { uid: auth.currentUser.uid, userEmail: auth.currentUser.email, serviceName: s.name, link, quantity: qty, cost: totalCost, status: 'Pending', timestamp: Date.now() });
-                alert("✅ Order Placed!");
-            } catch(e) { alert(e.message); }
-        };
-
-        window.selectAmount = (amt) => { document.getElementById('pay-amt').value = amt; };
-        window.goToPayment = () => {
-            const amt = document.getElementById('pay-amt').value;
-            if(!amt || amt <= 0) return alert("Select amount");
-            document.getElementById('deposit-step-1').classList.add('hidden');
-            document.getElementById('deposit-step-2').classList.remove('hidden');
-            const payeeName = "ARIFUL HOQUE"; 
-            const upiLink = `upi://pay?pa=${window.adminUpi}&pn=${encodeURIComponent(payeeName)}&am=${amt}&cu=INR&mode=02&purpose=00`;
-            document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiLink)}`;
-            startPaymentTimer();
-        };
-        function startPaymentTimer() {
-            let time = 120;
-            paymentTimerInterval = setInterval(() => {
-                let mins = Math.floor(time / 60), secs = time % 60;
-                const timerEl = document.getElementById('payment-timer');
-                if(timerEl) timerEl.innerText = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
-                if (--time < 0) { clearInterval(paymentTimerInterval); resetDeposit(); }
-            }, 1000);
-        }
-        window.resetDeposit = () => { clearInterval(paymentTimerInterval); document.getElementById('deposit-step-1').classList.remove('hidden'); document.getElementById('deposit-step-2').classList.add('hidden'); };
-        window.submitDeposit = async () => {
-            const amt = parseFloat(document.getElementById('pay-amt').value), utr = document.getElementById('utr-input').value;
-            if(!utr || utr.length < 10) return alert("Invalid UTR");
-            try {
-                await set(push(ref(db, 'deposits')), { uid: auth.currentUser.uid, userEmail: auth.currentUser.email, amount: amt, utr, status: 'Pending', timestamp: Date.now() });
-                alert("Request Sent!"); resetDeposit();
-            } catch(e) { alert(e.message); }
-        };
-
-        window.handleLogout = () => signOut(auth);
-        window.showSection = (id, btn) => {
-            document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
-            const target = document.getElementById(id);
-            if(target) target.classList.remove('hidden');
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('nav-active', 'text-blue-400'));
-            if(btn) btn.classList.add('nav-active', 'text-blue-400');
-        };
-        window.filterCat = (catName) => {
-            renderServiceCards(catName);
-            showSection('new-order');
-        };
+        document.addEventListener('DOMContentLoaded', () => App.init());
     </script>
 </body>
 </html>
